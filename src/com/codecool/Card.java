@@ -81,4 +81,12 @@ public enum Card {
     public int getRange() {
         return range;
     }
+
+    public String toString() {
+	    return this.getName()  +
+                " :    (1) Speed: " + this.getSpeed() +
+                "  ||  (2) Maximum height: " + this.getMaxHeight() +
+                "  ||  (3) Maximum takeoff weight: " + this.getMaxTakeoffWeight() +
+                "  ||  (4) Maximum range: " + this.getRange();
+    }
 }

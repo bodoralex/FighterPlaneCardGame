@@ -4,28 +4,28 @@ import java.util.Queue;
 
 public class Player implements PlayCapable {
 
-    @Override
-    public Integer choose() {
-    return null;
-    }
+	@Override
+	public void attack() {
+		// TODO Auto-generated method stub
+		
+	}
 
-    @Override
-    public void draw() {
+	@Override
+	public void defense() {
+		// TODO Auto-generated method stub
+		
+	}
 
-    }
+	@Override
+	public void setHand(Queue<Card> cards) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    @Override
-    public void addToHand(Card card) {
+	@Override
+	public Queue<Card> getHand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    }
-
-    @Override
-    public void setHand(Queue<Card> cards) {
-
-    }
-
-    @Override
-    public Queue<Card> getHand() {
-        return null;
-    }
 }
