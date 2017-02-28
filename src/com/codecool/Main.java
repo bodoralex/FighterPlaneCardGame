@@ -11,6 +11,8 @@ public class Main {
 
 		Game game = new Game();
 		Deck deck = new Deck();
+		Printer printer = new Printer();
+		game.setPrinter(printer);
 		game.getplayers();
 		
 		deck.fillDeck(Card.values());
