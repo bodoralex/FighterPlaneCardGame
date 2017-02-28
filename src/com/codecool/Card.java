@@ -1,9 +1,10 @@
 package com.codecool;
 
+
 /**
  * Created by pata on 2017.02.27..
  */
-public enum Card {
+public enum Card{
 //api change: speed,maxmagasság,max felszállási súly,range
     BELLAIRCOBRA ("P–39 Airacobra",626, 10700, 3800, 840),
     BELLKINGCOBRA("P–63 Kingcobra",660,13100,4900,725),

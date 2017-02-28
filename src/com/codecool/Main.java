@@ -9,11 +9,11 @@ public class Main {
         System.out.println(deck.cards.get(1).getSpeed());
         
         
-//		Game game = new Game();
-//		game.getplayers();
-//		game.getCards(Card.values());
-//		game.deal();
-//		game.play();
+		Game game = new Game();
+		game.getplayers();
+		game.getCards(Card.values());
+		game.deal();
+		//game.play();
 
     }
 }
