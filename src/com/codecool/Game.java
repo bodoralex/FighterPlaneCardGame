@@ -7,9 +7,14 @@ public class Game {
 		
 	}
 
-	public void play() {
+	public Player round() {
 		// TODO Auto-generated method stub
 		
+//		attack 
+//			card 0/1/2/3
+//		defense
+//			boolean
+		return null;
 	}
 
 	public void deal() {
