@@ -1,6 +1,5 @@
 package com.codecool;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +8,8 @@ import java.util.Set;
 
 public class Game {
 
-	private Set<PlayCapable> players = new HashSet<PlayCapable>();
+	public Set<PlayCapable> players = new HashSet<PlayCapable>(); // majd legyen
+																	// private
 
 	private Printer printer;
 
@@ -17,34 +17,35 @@ public class Game {
 		printer.print("Let's set up the players!");
 		Scanner scanner = new Scanner(System.in);
 		Set<Robot> robots = new HashSet<Robot>();
-		List<String> robotAnswer = (List<String>) Arrays.asList("Robot", "robot", "ai", "Ai", "AI", "bot");
+		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot","borot", "ai", "bot");
 
 		printer.print(String.format(
 				"Please enter the name of the %s. player." + "Or enter Robot, if you would like to add a robot :).",
 				players.size()));
 		boolean gathering = true;
 		while (gathering) {
-			String newName = scanner.next().trim();
-			if (newName.equalsIgnoreCase("exit")) {
+			String newName = scanner.next().trim().toLowerCase();
+			if (newName.equals("exit")) {
 				gathering = false;
 			} else if (robotAnswer.contains(newName)) {
 				PlayCapable robot = new Robot();
 				players.add(robot);
-
+				printer.print(String.format("%s added", robot.getName()));
 			} else {
 				PlayCapable player = new Player(newName);
+
 				if (players.contains(player)) {
-					try{
+					try {
 						throw new NameTakenException();
-					}catch(NameTakenException e){
-						e.errorMessage();
+					} catch (NameTakenException e) {
+						printer.print(e.errorMessage());
 					}
+				}else{
+					printer.print(String.format("%s added", player.getName()));
 				}
 				players.add(player);
 			}
-
 		}
-
 	}
 
 	public Player round() {
@@ -65,7 +66,7 @@ public class Game {
 			}
 		}
 		scanner.close();
-		deck.handout(getPlayers(), cardsNumber);
+		// deck.handout(getPlayers(), cardsNumber);
 		printer.print("Cards are dealt.");
 	}
 
