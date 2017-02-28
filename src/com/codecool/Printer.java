@@ -5,7 +5,7 @@ package com.codecool;
  */
 public class Printer {
 
-    public void print(String message) {
-        System.out.println(message);
+    public void print(Object object) {
+        System.out.println(object);
     }
 }
