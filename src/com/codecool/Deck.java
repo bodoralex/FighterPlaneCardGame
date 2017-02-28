@@ -1,6 +1,5 @@
 package com.codecool;
 
-import com.codecool.Card;
 
 import java.util.ArrayList;
 

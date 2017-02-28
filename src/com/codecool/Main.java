@@ -8,9 +8,10 @@ public class Main {
         deck.listFiller();
         System.out.println(deck.cards.get(1).getSpeed());
         
+        
 //		Game game = new Game();
 //		game.getplayers();
-//		game.getcards(Cards);
+//		game.getCards(Card.values());
 //		game.deal();
 //		game.play();
 
