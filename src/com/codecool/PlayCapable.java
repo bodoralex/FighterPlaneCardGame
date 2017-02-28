@@ -6,10 +6,9 @@ import java.util.Queue;
  * majd implementálni fogja a robot & a player
 */
 public interface PlayCapable {
-	
-	public void attack();
-	public void defense();
-	
+	public Integer choose();
+	public void draw();
+	public void addToHand(Card card);
 	public void setHand(Queue<Card> cards);
 	public Queue<Card> getHand();
 	//egyáltalán nem végleges
