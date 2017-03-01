@@ -7,14 +7,13 @@ public class Main {
 		// Deck deck = new Deck();
 		// deck.listFiller();
 		// System.out.println(deck.cards.get(1).getSpeed());
-		//
 
 		Game game = new Game();
 		Deck deck = new Deck();
 		Printer printer = new Printer();
 		game.setPrinter(printer);
-		game.getPlayers();
-		game.players.forEach(System.out::println);
+		game.gatherPlayers();
+		game.getPlayers().forEach(System.out::println);
 		
 		
 //		deck.fillDeck(Card.values());
