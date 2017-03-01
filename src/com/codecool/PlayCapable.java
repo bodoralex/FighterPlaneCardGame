@@ -11,5 +11,7 @@ public interface PlayCapable {
 	public void addToHand(Card card);
 	public void setHand(Queue<Card> cards);
 	public Queue<Card> getHand();
+	public String getName();
+	
 	//egyáltalán nem végleges
 }

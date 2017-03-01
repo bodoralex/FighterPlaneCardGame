@@ -11,12 +11,16 @@ public class Main {
 
 		Game game = new Game();
 		Deck deck = new Deck();
-		//game.getplayers();
+		Printer printer = new Printer();
+		game.setPrinter(printer);
+		game.getPlayers();
+		game.players.forEach(System.out::println);
 		
-		deck.fillDeck(Card.values());
-		deck.shuffleCards();
-		//
-		game.deal(deck);
+		
+//		deck.fillDeck(Card.values());
+//		deck.shuffleCards();
+//		
+//		game.deal(deck);
 		
 		// game.play();
 

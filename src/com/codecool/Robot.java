@@ -1,9 +1,21 @@
 package com.codecool;
 
-import java.util.*;
-import java.util.Collections.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class Robot implements PlayCapable {
+public class Robot implements PlayCapable{
+    protected String name;
+    protected static int robots = 0;
+
+    public Robot() {
+        this.name = "Robot " + robots;
+        robots++;
+    }
+
+    public String getName() {
+        return name;
+    }
     private final Double AVGSPEED = 558.0;
     private final Double AVGHEIGHT = 10482.0;
     private final Double AVGWEIGHT = 4952.0;
@@ -53,18 +65,45 @@ public class Robot implements PlayCapable {
 
     }
 
+	@Override
+	public void setHand(Queue<Card> cards) {
+		// TODO Auto-generated method stub
+		
+	}
     @Override
     public void addToHand(Card card) {
         this.hand.add(card);
     }
 
-    @Override
-    public Queue<Card> getHand() {
-        return this.hand;
-    }
+	@Override
+	public Queue<Card> getHand() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public void setHand(Queue<Card> cards) {
-        this.hand = cards;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Robot other = (Robot) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
 }
