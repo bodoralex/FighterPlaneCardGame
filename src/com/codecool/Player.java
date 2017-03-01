@@ -51,9 +51,4 @@ public class Player implements PlayCapable {
         return 0;
     }
 
-	@Override
-	public void addToHand(Card card) {
-		hand.add(card);
-	}
-
 }

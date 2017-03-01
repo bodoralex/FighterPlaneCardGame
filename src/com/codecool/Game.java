@@ -98,6 +98,7 @@ public class Game {
 		cardList.addAll(cardSet);
 		Collections.sort(cardList, comparator);
 		PlayCapable winnerPlayerCapable = cards.get(cardList.get(0));
+		awardWinner(cardList, winnerPlayerCapable);
 		return winnerPlayerCapable;
 
 	}
