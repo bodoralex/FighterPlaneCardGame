@@ -8,37 +8,46 @@ import java.util.Set;
 
 public class Game {
 
-	public Set<PlayCapable> players = new HashSet<PlayCapable>(); // majd legyen
+	private Set<PlayCapable> players = new HashSet<PlayCapable>(); // majd legyen
 																	// private
-
 	private Printer printer;
 
-	public void getPlayers() {
-		printer.print("Let's set up the players!");
-		Scanner scanner = new Scanner(System.in);
-		Set<Robot> robots = new HashSet<Robot>();
+	
+	public String parseKey(){
+	
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot","borot", "ai", "bot");
+		List<String> exitAnswer = (List<String>) Arrays.asList("exit", "q", "quit", "done");
+		
+		Scanner scanner = new Scanner(System.in);
+		String input = scanner.next().trim().toLowerCase();
+		if(robotAnswer.contains(input)) return "robot";
+		if(exitAnswer.contains(input)) return "exit";
+		return input;
 
+	}
+
+	public void gatherPlayers() {
+		printer.print("Let's set up the players!");
 		printer.print(String.format(
-				"Please enter the name of the %s. player." + "Or enter Robot, if you would like to add a robot :).",
+				"Please enter the name of the %s. player. " + "Or enter Robot, if you would like to add a robot :).",
 				players.size()));
+		printer.print("Enter done if you wouldn't like to add nem player");
 		boolean gathering = true;
 		while (gathering) {
-			String newName = scanner.next().trim().toLowerCase();
-			if (newName.equals("exit")) {
+			String input = parseKey();
+			if (input .equals("exit")) {
 				gathering = false;
-			} else if (robotAnswer.contains(newName)) {
+			} else if (input.equals("robot")) {
 				PlayCapable robot = new Robot();
 				players.add(robot);
 				printer.print(String.format("%s added", robot.getName()));
 			} else {
-				PlayCapable player = new Player(newName);
-
+				PlayCapable player = new Player(input);
 				if (players.contains(player)) {
 					try {
 						throw new NameTakenException();
-					} catch (NameTakenException e) {
-						printer.print(e.errorMessage());
+					} catch (NameTakenException error) {
+						printer.print(error.errorMessage());
 					}
 				}else{
 					printer.print(String.format("%s added", player.getName()));
@@ -66,17 +75,17 @@ public class Game {
 			}
 		}
 		scanner.close();
-		// deck.handout(getPlayers(), cardsNumber);
+		// deck.handout(gatherPlayers(), cardsNumber);
 		printer.print("Cards are dealt.");
 	}
 
-	public void getCards(Card[] cards) {
-
-	}
 
 	public void setPrinter(Printer printer) {
 		this.printer = printer;
 
+	}
+	public Set<PlayCapable> getPlayers(){
+		return players;
 	}
 
 }
