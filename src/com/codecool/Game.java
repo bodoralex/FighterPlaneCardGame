@@ -94,7 +94,7 @@ public class Game {
 			}
 		}
 
-		Comparator comparator = choiceMap.get(choice-1);
+		Comparator comparator = choiceMap.get(choice);
 		Set<Card> cardSet = cards.keySet();
 		List<Card> cardList = new ArrayList<>();
 		cardList.addAll(cardSet);

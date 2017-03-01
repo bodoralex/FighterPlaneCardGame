@@ -3,11 +3,9 @@ package com.codecool;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class Player implements PlayCapable {
 
-    Scanner scanner = new Scanner(System.in);
     Printer printer = new Printer();
     OurQueue<Card> hand = new OurQueue<>();
     String name;
@@ -28,8 +26,8 @@ public class Player implements PlayCapable {
 
     public void checkMyCard() {
         Card topCard = hand.peek();
-        System.out.println(topCard);
-        System.out.println("Choose the attribute you want to use");
+        printer.print(topCard);
+        printer.print("Choose the attribute you want to use");
     }
 
     @Override
@@ -39,7 +37,7 @@ public class Player implements PlayCapable {
 
     @Override
     public Integer choose() {
-    	
+
         checkMyCard();
         boolean goodInput = false;
 

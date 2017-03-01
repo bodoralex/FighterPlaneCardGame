@@ -18,8 +18,11 @@ public class Main {
 		deck.fillDeck(Card.values());
 		deck.shuffleCards();
 		game.deal(deck);
-		game.round();
-		
+        System.out.println(game.round().getName());
+        System.out.println(game.round().getName());
+        System.out.println(game.round().getName());
+        System.out.println(game.round().getName());
+
 		
 		
 		//game.play();
