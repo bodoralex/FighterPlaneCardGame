@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Game {
 
-	public Set<PlayCapable> players = new HashSet<PlayCapable>(); // majd legyen
+	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
 																	// private
 	private List<PlayCapable> playerList = new ArrayList<>();
 
@@ -47,13 +47,13 @@ public class Game {
 
 	public PlayCapable round() {
 
+		Card[] cards = new Card[players.size()];
 		PlayCapable roundAttacker = roundAttacker();
-		roundAttacker.attack();
-		for (PlayCapable playCapable: players) {
-			if (!playCapable.equals(roundAttacker)) {
-				playCapable.defense();
-			}
+		roundAttacker.choose();
+		for (int i=0; i< players.size(); i++) {
+				players.draw();
 		}
+
 		// roundAttacker választása alapján sort egy playerCapables-listben...return 0.index...
 		return null;
 
@@ -73,15 +73,15 @@ public class Game {
 
 	}
 
-	class SpeedComparator implements Comparator<PlayCapable> {
+	class SpeedComparator implements Comparator<Card> {
 
 		@Override
-		public int compare(PlayCapable o1, PlayCapable o2) {
-			int o1Speed = o1.getHand().peek().getSpeed();
-			int o2Speed = o2.getHand().peek().getSpeed();
-			if (o1Speed > o2Speed) {
+		public int compare(Card c1, Card c2) {
+			int c1Speed = c1.getSpeed()
+			int c2Speed = c2.getSpeed()
+			if (c1Speed > c2Speed) {
 				return -1;
-			} else if (o1Speed < o2Speed) {
+			} else if (c1Speed < c2Speed) {
 				return 1;
 			} else {
 				return 0;
@@ -89,15 +89,15 @@ public class Game {
 		}
 	}
 
-	class maxHeightComparator implements Comparator<PlayCapable> {
+	class maxHeightComparator implements Comparator<Card> {
 
 		@Override
-		public int compare(PlayCapable o1, PlayCapable o2) {
-			int o1MaxHeight = o1.getHand().peek().getMaxHeight();
-			int o2MaxHeight = o2.getHand().peek().getMaxHeight();
-			if (o1MaxHeight > o2MaxHeight) {
+		public int compare(Card c1, Card c2) {
+			int c1MaxHeight = c1.getMaxHeight();
+			int c2MaxHeight = c2.getMaxHeight();
+			if (c1MaxHeight > c2MaxHeight) {
 				return -1;
-			} else if (o1MaxHeight < o2MaxHeight) {
+			} else if (c1MaxHeight < c2MaxHeight) {
 				return 1;
 			} else {
 				return 0;
@@ -105,15 +105,15 @@ public class Game {
 		}
 	}
 
-	class maxTakeoffWeightComparator implements Comparator<PlayCapable> {
+	class maxTakeoffWeightComparator implements Comparator<Card> {
 
 		@Override
-		public int compare(PlayCapable o1, PlayCapable o2) {
-			int o1MaxTakeoffWeight = o1.getHand().peek().getMaxTakeoffWeight();
-			int o2MaxTakeoffWeight = o2.getHand().peek().getMaxTakeoffWeight();
-			if (o1MaxTakeoffWeight > o2MaxTakeoffWeight) {
+		public int compare(Card c1, Card c2) {
+			int c1MaxTakeoffWeight = c1.getMaxTakeoffWeight();
+			int c2MaxTakeoffWeight = c2.getMaxTakeoffWeight();
+			if (c1MaxTakeoffWeight > c2MaxTakeoffWeight) {
 				return -1;
-			} else if (o1MaxTakeoffWeight < o2MaxTakeoffWeight) {
+			} else if (c1MaxTakeoffWeight < c2MaxTakeoffWeight) {
 				return 1;
 			} else {
 				return 0;
@@ -121,15 +121,15 @@ public class Game {
 		}
 	}
 
-	class rangeComparator implements Comparator<PlayCapable> {
+	class rangeComparator implements Comparator<Card> {
 
 		@Override
-		public int compare(PlayCapable o1, PlayCapable o2) {
-			int o1Range = o1.getHand().peek().getRange();
-			int o2Range = o2.getHand().peek().getRange();
-			if (o1Range > o2Range) {
+		public int compare(Card c1, Card c2) {
+			int c1Range = c1.getRange();
+			int c2Range = c2.getRange();
+			if (c1Range > c2Range) {
 				return -1;
-			} else if (o1Range < o2Range) {
+			} else if (c1Range < c2Range) {
 				return 1;
 			} else {
 				return 0;

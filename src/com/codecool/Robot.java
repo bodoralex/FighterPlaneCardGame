@@ -16,6 +16,7 @@ public class Robot implements PlayCapable{
     public String getName() {
         return name;
     }
+
     private final Double AVGSPEED = 558.0;
     private final Double AVGHEIGHT = 10482.0;
     private final Double AVGWEIGHT = 4952.0;

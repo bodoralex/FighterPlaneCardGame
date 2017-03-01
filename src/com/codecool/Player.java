@@ -10,12 +10,12 @@ public class Player implements PlayCapable {
     Printer printer = new Printer();
     Queue<Card> hand = new LinkedList<>();
 
-    @Override
+    // Lehet, hogy kell még
     public int attack() {
         Card topCard = hand.peek();
         printer.print(topCard);
         printer.print("Choose the attribute you want to use");
-        return getPlayerChoice();
+        return choose();
     }
 
     @Override
@@ -24,21 +24,7 @@ public class Player implements PlayCapable {
     }
 
     @Override
-    public void setHand(Queue<Card> cards) {
-
-    }
-
-    @Override
-    public Queue<Card> getHand() {
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    public int getPlayerChoice() {
+    public Integer choose() {
         boolean goodInput = false;
         while (!goodInput) {
             int playerChoice = scanner.nextInt();
