@@ -1,6 +1,7 @@
 package com.codecool;
 
 import java.util.*;
+import java.util.Collections.*;
 
 public class Robot implements PlayCapable {
     private final Double AVGSPEED = 558.0;

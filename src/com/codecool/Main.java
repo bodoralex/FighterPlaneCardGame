@@ -11,7 +11,7 @@ public class Main {
 
 		Game game = new Game();
 		Deck deck = new Deck();
-		game.getplayers();
+		//game.getplayers();
 		
 		deck.fillDeck(Card.values());
 		deck.shuffleCards();
