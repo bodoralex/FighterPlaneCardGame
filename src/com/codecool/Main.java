@@ -1,12 +1,13 @@
 package com.codecool;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
 	public static Scanner scanner = new Scanner(System.in);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException{
 
 		Game game = new Game();
 		Deck deck = new Deck();
@@ -17,10 +18,11 @@ public class Main {
 		deck.shuffleCards();
 		game.gatherPlayers();
 		game.deal(deck);
+
 		//game.round();
+		while(deck.getCards().size() > 0){
 		System.out.println(game.round());
-		System.out.println(game.round());
-		System.out.println(game.round());
+		}
 
 		// System.out.println(game.round().getName());
 		// System.out.println(game.round().getName());
@@ -29,6 +31,6 @@ public class Main {
 		//
 		//
 		// //game.play();
-		// scanner.close();
+		scanner.close();
 	}
 }

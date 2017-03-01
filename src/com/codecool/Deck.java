@@ -3,6 +3,7 @@ package com.codecool;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -11,10 +12,11 @@ import java.util.List;
 public class Deck {
 
 	private ArrayList<Card> cards = new ArrayList<>();
-	
-	public Deck(){};
-	
-	public Deck(Card[] cards){
+
+	public Deck() {
+	};
+
+	public Deck(Card[] cards) {
 		this.cards = (ArrayList<Card>) Arrays.asList(cards);
 	}
 
@@ -27,17 +29,22 @@ public class Deck {
 	public void shuffleCards() {
 		Collections.shuffle(cards);
 	}
-	
+
 	public void handout(List<PlayCapable> players, int cardsNumber) {
-		int cardsPersPlayer = (int) Math.floor(players.size() / cardsNumber);
+		int cardsPersPlayer = (int) Math.floor(cardsNumber / players.size());
+		Iterator<Card> cardIterator = cards.iterator();
 		for (int i = 0; i < players.size(); i++) {
-			for (int j = 0; j < cardsNumber; j++) {
-				players.get(i).addCardToHand(cards.remove(j));
+			for (int j = 0; j < cardsPersPlayer; j++) {
+				Card card = cardIterator.next();
+				players.get(i).addCardToHand(card);
 			}
 		}
 	}
 
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+	public int deckSize(){
+		return getCards().size();
+	}
 }
