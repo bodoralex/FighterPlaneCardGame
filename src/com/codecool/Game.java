@@ -12,14 +12,14 @@ public class Game {
 	private Printer printer;
 
 	public String parseKey() {
+		Scanner scanner = new Scanner(System.in);
 
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot", "borot", "ai", "bot");
 		List<String> exitAnswer = (List<String>) Arrays.asList("k","exit", "q", "quit", "done");
 
-		Scanner scanner = new Scanner(System.in);
 		String inputScan = scanner.next();
 		String input = inputScan.trim().toLowerCase();
-		//scanner.close();
+		
 		if (robotAnswer.contains(input))
 			return "robot";
 		if (exitAnswer.contains(input))
@@ -94,7 +94,7 @@ public class Game {
 			}
 		}
 
-		Comparator comparator = choiceMap.get(choice);
+		Comparator comparator = choiceMap.get(choice-1);
 		Set<Card> cardSet = cards.keySet();
 		List<Card> cardList = new ArrayList<>();
 		cardList.addAll(cardSet);
@@ -184,21 +184,18 @@ public class Game {
 	}
 
 	public void deal(Deck deck) {
-		Scanner scanner = new Scanner(System.in);
 		printer.print("How many cards do you want to play with?");
 		Integer cardsNumber = new Integer(0);
 		while (cardsNumber.equals(0)) {
 			try {
-				String howMany = scanner.next().trim();
+				String howMany = Main.scanner.next().trim();
 				cardsNumber = Integer.parseInt(howMany);
 			} catch (Exception e) {
 				printer.print("That is not an integer.");
 			}
 		}
-		scanner.close();
 		deck.handout(getPlayers(), cardsNumber);
 		printer.print("Cards are dealt.");
-		scanner.close();
 	}
 
 	public void setPrinter(Printer printer) {

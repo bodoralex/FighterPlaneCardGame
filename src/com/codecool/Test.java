@@ -9,8 +9,11 @@ import java.util.Scanner;
 public class Test {
 
 	public static void main(String[] args) {
-		System.out.println(Integer.compare(4, 5));
-		
+		Scanner scannr = new Scanner(System.in);
+		String input = scannr.next();
+        Integer playerChoice = Integer.parseInt(input);
+		System.out.println(playerChoice);
+		scannr.close();
 	}
 
 }

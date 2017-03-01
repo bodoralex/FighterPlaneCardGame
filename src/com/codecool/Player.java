@@ -3,6 +3,7 @@ package com.codecool;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Player implements PlayCapable {
 
@@ -38,11 +39,13 @@ public class Player implements PlayCapable {
 
     @Override
     public Integer choose() {
-    	Scanner scannr = new Scanner(System.in);
+    	
         checkMyCard();
         boolean goodInput = false;
+
         while (!goodInput) {
-            Integer playerChoice = Integer.parseInt(scannr.next());
+        	String input = Main.scanner.next().trim();
+            Integer playerChoice = Integer.parseInt(input);
             if (playerChoice == 1 || playerChoice == 2 || playerChoice == 3 || playerChoice == 4) {
                 return playerChoice;
             }
