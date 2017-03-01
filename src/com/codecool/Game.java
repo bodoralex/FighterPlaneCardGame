@@ -17,6 +17,7 @@ public class Game {
 		};
 
 	};
+	static final String[] attrs = { "Max Speed", "Max Height", "Max Takeoff weigth", "Maximum range" };
 
 	private Printer printer;
 
@@ -83,14 +84,16 @@ public class Game {
 			winner.addCardToHand(card);
 			count++;
 		}
-		printer.print("The winner got " + count +  " cards");
+		printer.print("The winner got " + count + " cards");
 	}
 
 	public PlayCapable round() {
 		printer.print("-----------------------------------------------------------------");
 		Map<Card, PlayCapable> cards = new HashMap<>();
 		PlayCapable roundAttacker = roundAttacker();
+		printer.print(roundAttacker.getName() + " is attacking!\n");
 		int choice = roundAttacker.choose();
+		printer.print(String.format("%s' choosen arrtibute is: %s", roundAttacker.getName(), attrs[choice - 1]));
 		for (PlayCapable player : players) {
 			printer.print(player.getName() + "'s card: " + player.peek());
 			cards.put(player.draw(), player);
@@ -201,7 +204,7 @@ public class Game {
 
 	public void deal(Deck deck) {
 		printer.print("How many cards do you want to play with?");
-		printer.print("The maximum card number is: "+ deck.deckSize());
+		printer.print("The maximum card number is: " + deck.deckSize());
 		Integer cardsNumber = new Integer(0);
 		while (cardsNumber.equals(0)) {
 			try {

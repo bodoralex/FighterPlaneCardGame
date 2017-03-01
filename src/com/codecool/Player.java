@@ -31,7 +31,6 @@ public class Player implements PlayCapable {
     	
     	
         Card topCard = hand.peek();
-        printer.print(getName() + " is attacking!\n");
         printer.print(topCard);
         printer.print("Choose the attribute you want to use");
     }
