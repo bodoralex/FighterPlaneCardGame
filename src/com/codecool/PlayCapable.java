@@ -14,5 +14,6 @@ public interface PlayCapable {
 	public OurQueue<Card> getHand();
 	public String toString();
 	public int cardsRemaining();
+	public Card peek();
 
 }

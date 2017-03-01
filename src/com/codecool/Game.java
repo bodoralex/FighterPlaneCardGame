@@ -77,21 +77,22 @@ public class Game {
 	}
 
 	public void awardWinner(TreeMap<Card, PlayCapable> map) {
+		int count = 0;
 		PlayCapable winner = map.firstEntry().getValue();
 		for (Card card : map.keySet()) {
 			winner.addCardToHand(card);
+			count++;
 		}
+		printer.print("The winner got " + count +  " cards");
 	}
 
 	public PlayCapable round() {
-
+		printer.print("-----------------------------------------------------------------");
 		Map<Card, PlayCapable> cards = new HashMap<>();
-
 		PlayCapable roundAttacker = roundAttacker();
-
 		int choice = roundAttacker.choose();
-
 		for (PlayCapable player : players) {
+			printer.print(player.getName() + "'s card: " + player.peek());
 			cards.put(player.draw(), player);
 		}
 		Queue<Card> robotCards = new LinkedList<>();
@@ -105,13 +106,11 @@ public class Game {
 
 		TreeMap<Card, PlayCapable> sorted = new TreeMap<Card, PlayCapable>(choiceMap.get(choice));
 		sorted.putAll(cards);
-		System.out.println(choice);
-		System.out.println(sorted);
-
 		PlayCapable winner = sorted.firstEntry().getValue();
-		System.out.println(winner);
+		printer.print("\nThe winner is: " + winner.getName());
 
 		awardWinner(sorted);
+		printer.print("-----------------------------------------------------------------");
 
 		return winner;
 	}

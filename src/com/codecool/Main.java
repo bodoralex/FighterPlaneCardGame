@@ -12,15 +12,17 @@ public class Main {
 		Deck deck = new Deck();
 		Printer printer = new Printer();
 		game.setPrinter(printer);
-
 		deck.fillDeck(Card.values());
 		deck.shuffleCards();
 		game.gatherPlayers();
 		game.deal(deck);
-		//game.round();
-		System.out.println(game.round());
-		System.out.println(game.round());
-		System.out.println(game.round());
+
+		game.round();
+		game.round();
+		game.round();
+
+		
+
 
 		// System.out.println(game.round().getName());
 		// System.out.println(game.round().getName());

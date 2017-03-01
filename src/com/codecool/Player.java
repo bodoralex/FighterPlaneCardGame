@@ -28,7 +28,10 @@ public class Player implements PlayCapable {
     }
 
     public void checkMyCard() {
+    	
+    	
         Card topCard = hand.peek();
+        printer.print(getName() + " is attacking!\n");
         printer.print(topCard);
         printer.print("Choose the attribute you want to use");
     }
@@ -40,7 +43,6 @@ public class Player implements PlayCapable {
 
     @Override
     public Integer choose() {
-
         checkMyCard();
         boolean goodInput = false;
 
@@ -90,6 +92,11 @@ public class Player implements PlayCapable {
 	@Override
 	public int cardsRemaining() {
 		return getHand().size();
+	}
+
+	@Override
+	public Card peek() {
+		return hand.peek();
 	}
 
 }
