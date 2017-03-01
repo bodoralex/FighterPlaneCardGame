@@ -14,7 +14,7 @@ public class Robot implements PlayCapable{
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     private final Double AVGSPEED = 558.0;
@@ -62,20 +62,22 @@ public class Robot implements PlayCapable{
     }
 
     @Override
-    public void draw() {
+    public Card draw() {
+
+        return null;
 
     }
 
-	@Override
+
 	public void setHand(Queue<Card> cards) {
 		this.hand = cards;
 	}
-    @Override
+
     public void addToHand(Card card) {
         this.hand.add(card);
     }
 
-	@Override
+
 	public Queue<Card> getHand() {
 		return this.hand;
 	}

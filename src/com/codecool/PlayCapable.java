@@ -8,4 +8,5 @@ import java.util.Queue;
 public interface PlayCapable {
 	public Integer choose();
 	public Card draw();
+	public String getName();
 }

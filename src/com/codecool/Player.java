@@ -9,6 +9,16 @@ public class Player implements PlayCapable {
     Scanner scanner = new Scanner(System.in);
     Printer printer = new Printer();
     Queue<Card> hand = new LinkedList<>();
+    String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 
     // Lehet, hogy kell még
     public int attack() {

@@ -61,7 +61,7 @@ public class Game {
 		PlayCapable roundAttacker = roundAttacker();
 		roundAttacker.choose();
 		for (int i=0; i< players.size(); i++) {
-				players.draw();
+			cards[i] = players.get(i).draw();
 		}
 
 		// roundAttacker választása alapján sort egy playerCapables-listben...return 0.index...
@@ -87,8 +87,8 @@ public class Game {
 
 		@Override
 		public int compare(Card c1, Card c2) {
-			int c1Speed = c1.getSpeed()
-			int c2Speed = c2.getSpeed()
+			int c1Speed = c1.getSpeed();
+			int c2Speed = c2.getSpeed();
 			if (c1Speed > c2Speed) {
 				return -1;
 			} else if (c1Speed < c2Speed) {
@@ -169,7 +169,7 @@ public class Game {
 		this.printer = printer;
 
 	}
-	public Set<PlayCapable> getPlayers(){
+	public List<PlayCapable> getPlayers(){
 		return players;
 	}
 
