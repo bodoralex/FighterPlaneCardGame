@@ -1,73 +1,52 @@
 package com.codecool;
 
+import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class Player implements PlayCapable {
 
-	protected String name;
+    Scanner scanner = new Scanner(System.in);
+    Printer printer = new Printer();
+    Queue<Card> hand = new LinkedList<>();
 
-	public Player(String name) {
-		this.name = name;
-	}
+    @Override
+    public int attack() {
+        Card topCard = hand.peek();
+        printer.print(topCard);
+        printer.print("Choose the attribute you want to use");
+        return getPlayerChoice();
+    }
 
-	public String getName() {
-		return name;
-	}
+    @Override
+    public Card draw() {
+        return hand.remove();
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Override
+    public void setHand(Queue<Card> cards) {
 
-	@Override
-	public Integer choose() {
-		return null;
+    }
 
-	}
+    @Override
+    public Queue<Card> getHand() {
+        return null;
+    }
 
-	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
+    @Override
+    public String getName() {
+        return null;
+    }
 
-	}
-
-	@Override
-	public void addToHand(Card card) {
-
-	}
-
-	@Override
-	public void setHand(Queue<Card> cards) {
-
-	}
-
-	@Override
-	public Queue<Card> getHand() {
-		return null;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Player other = (Player) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+    public int getPlayerChoice() {
+        boolean goodInput = false;
+        while (!goodInput) {
+            int playerChoice = scanner.nextInt();
+            if (playerChoice == 1 || playerChoice == 2 || playerChoice == 3 || playerChoice == 4) {
+                return playerChoice;
+            }
+        }
+        return 0;
+    }
 
 }
