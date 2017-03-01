@@ -10,4 +10,5 @@ public interface PlayCapable {
 	public Card draw();
 	public String getName();
 	void addToHand(Card card);
+	public OurQueue<Card> getDeck();
 }

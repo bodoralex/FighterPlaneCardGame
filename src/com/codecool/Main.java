@@ -4,24 +4,21 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// Deck deck = new Deck();
-		// deck.listFiller();
-		// System.out.println(deck.cards.get(1).getSpeed());
 
 		Game game = new Game();
 		Deck deck = new Deck();
 		Printer printer = new Printer();
 		game.setPrinter(printer);
 		game.gatherPlayers();
-		game.getPlayers().forEach(System.out::println);
+		
+		deck.fillDeck(Card.values());
+		deck.shuffleCards();
+		game.deal(deck);
+		
+		System.out.println(game.getPlayers().get(0).getDeck().remove());
 		
 		
-//		deck.fillDeck(Card.values());
-//		deck.shuffleCards();
-//		
-//		game.deal(deck);
-		
-		// game.play();
+//		game.play();
 
 	}
 }

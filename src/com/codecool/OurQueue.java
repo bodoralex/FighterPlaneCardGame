@@ -36,5 +36,8 @@ public class OurQueue<Card> {
 		return (Card) deck[0];
 		
 	}
+	public int size(){
+		return deck.length;
+	}
 
 }

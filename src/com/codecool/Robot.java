@@ -22,7 +22,7 @@ public class Robot implements PlayCapable {
 	private final Double AVGWEIGHT = 4952.0;
 	private final Double AVGRANGE = 1072.0;
 	private String name;
-	private Queue<Card> hand = new LinkedList<>();
+	private OurQueue<Card> hand = new OurQueue<Card>();
 	private Double afteravgSpeed, afteravgHeight, afteravgWeight, afteravgRange;
 	private LinkedHashMap<String, Double> compareList = new LinkedHashMap<>();
 	private LinkedHashMap<String, Integer> attributeIdList = new LinkedHashMap<>();
@@ -68,11 +68,11 @@ public class Robot implements PlayCapable {
 
 	}
 
-	public void setHand(Queue<Card> cards) {
+	public void setHand(OurQueue<Card> cards) {
 		this.hand = cards;
 	}
 
-	public Queue<Card> getHand() {
+	public OurQueue<Card> getHand() {
 		return this.hand;
 	}
 
@@ -105,6 +105,9 @@ public class Robot implements PlayCapable {
 	public void addToHand(Card card) {
 		hand.add(card);
 
+	}
+	public OurQueue<Card> getDeck() {
+		return hand;
 	}
 
 }
