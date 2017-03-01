@@ -33,6 +33,11 @@ public class Player implements PlayCapable {
         return null;
     }
 
+    @Override
+    public String getName() {
+        return null;
+    }
+
     public int getPlayerChoice() {
         boolean goodInput = false;
         while (!goodInput) {
