@@ -26,12 +26,10 @@ public class Player implements PlayCapable {
         hand.add(card);
     }
 
-    // Lehet, hogy kell még
-    public int attack() {
+    public void checkMyCard() {
         Card topCard = hand.peek();
         printer.print(topCard);
         printer.print("Choose the attribute you want to use");
-        return choose();
     }
 
     @Override
@@ -41,6 +39,7 @@ public class Player implements PlayCapable {
 
     @Override
     public Integer choose() {
+        checkMyCard();
         boolean goodInput = false;
         while (!goodInput) {
             int playerChoice = scanner.nextInt();
