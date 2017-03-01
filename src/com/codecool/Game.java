@@ -160,10 +160,9 @@ public class Game {
 			}
 		}
 		scanner.close();
-		// deck.handout(gatherPlayers(), cardsNumber);
+		deck.handout(getPlayers(), cardsNumber);
 		printer.print("Cards are dealt.");
 	}
-
 
 	public void setPrinter(Printer printer) {
 		this.printer = printer;
