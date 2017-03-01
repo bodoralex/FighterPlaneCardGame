@@ -1,15 +1,12 @@
 package com.codecool;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Game {
 
 	public Set<PlayCapable> players = new HashSet<PlayCapable>(); // majd legyen
 																	// private
+	private List<PlayCapable> playerList = new ArrayList<>();
 
 	private Printer printer;
 
@@ -48,9 +45,96 @@ public class Game {
 		}
 	}
 
-	public Player round() {
+	public PlayCapable round() {
 
+		PlayCapable roundAttacker = roundAttacker();
+		roundAttacker.attack();
+		for (PlayCapable playCapable: players) {
+			if (!playCapable.equals(roundAttacker)) {
+				playCapable.defense();
+			}
+		}
+		// roundAttacker választása alapján sort egy playerCapables-listben...return 0.index...
 		return null;
+
+	}
+
+	public PlayCapable roundAttacker() {
+
+		if (playerList.size() == 0) {
+			for (PlayCapable playCapable : players) {
+				playerList.add(playCapable);
+			}
+		}
+
+		PlayCapable player = playerList.get(0);
+		playerList.remove(0);
+		return player;
+
+	}
+
+	class SpeedComparator implements Comparator<PlayCapable> {
+
+		@Override
+		public int compare(PlayCapable o1, PlayCapable o2) {
+			int o1Speed = o1.getHand().peek().getSpeed();
+			int o2Speed = o2.getHand().peek().getSpeed();
+			if (o1Speed > o2Speed) {
+				return -1;
+			} else if (o1Speed < o2Speed) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+
+	class maxHeightComparator implements Comparator<PlayCapable> {
+
+		@Override
+		public int compare(PlayCapable o1, PlayCapable o2) {
+			int o1MaxHeight = o1.getHand().peek().getMaxHeight();
+			int o2MaxHeight = o2.getHand().peek().getMaxHeight();
+			if (o1MaxHeight > o2MaxHeight) {
+				return -1;
+			} else if (o1MaxHeight < o2MaxHeight) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+
+	class maxTakeoffWeightComparator implements Comparator<PlayCapable> {
+
+		@Override
+		public int compare(PlayCapable o1, PlayCapable o2) {
+			int o1MaxTakeoffWeight = o1.getHand().peek().getMaxTakeoffWeight();
+			int o2MaxTakeoffWeight = o2.getHand().peek().getMaxTakeoffWeight();
+			if (o1MaxTakeoffWeight > o2MaxTakeoffWeight) {
+				return -1;
+			} else if (o1MaxTakeoffWeight < o2MaxTakeoffWeight) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+
+	class rangeComparator implements Comparator<PlayCapable> {
+
+		@Override
+		public int compare(PlayCapable o1, PlayCapable o2) {
+			int o1Range = o1.getHand().peek().getRange();
+			int o2Range = o2.getHand().peek().getRange();
+			if (o1Range > o2Range) {
+				return -1;
+			} else if (o1Range < o2Range) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 	}
 
 	public void deal(Deck deck) {
