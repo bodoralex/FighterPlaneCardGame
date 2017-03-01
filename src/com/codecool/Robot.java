@@ -9,7 +9,7 @@ public class Robot implements PlayCapable {
     private Double avgRange = 1072.0;
     private ArrayList<Card> seenCards = new ArrayList<>();
     private String name;
-    private Queue<Card> hand = new LinkedList<>();
+    private OurQueue<Card> hand = new OurQueue<>();
     private LinkedHashMap<String, Double> compareList = new LinkedHashMap<>();
     private LinkedHashMap<String, Integer> attributeIdList = new LinkedHashMap<>();
 
@@ -65,15 +65,15 @@ public class Robot implements PlayCapable {
             }
         }
 
-		chosenAttributeNumber = attributeIdList.get(bestChoice);
-		return chosenAttributeNumber;
+		return attributeIdList.get(bestChoice);
 
 	}
 
 	@Override
 	public Card draw() {
 
-		return null;
+        return null;
+    }
 
     private void updateAverages() {
 
@@ -89,16 +89,17 @@ public class Robot implements PlayCapable {
         this.avgHeight = avgHeight / seenCards.size();
     }
 
-	public void setHand(OurQueue<Card> cards) {
-		this.hand = cards;
-	}
 
 	public OurQueue<Card> getHand() {
 		return this.hand;
 	}
+    public void setSeenCards(Queue<Card> cards) {
+        this.seenCards.addAll(cards);
+        this.updateAverages();
+    }
 
 
-    public void setHand(Queue<Card> cards) {
+    public void setHand(OurQueue<Card> cards) {
         this.hand = cards;
     }
 
@@ -128,7 +129,7 @@ public class Robot implements PlayCapable {
     }
 
 	@Override
-	public void addToHand(Card card) {
+	public void addCardToHand(Card card) {
 		hand.add(card);
 
 	}
