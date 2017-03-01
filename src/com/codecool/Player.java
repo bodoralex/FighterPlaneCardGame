@@ -11,6 +11,7 @@ public class Player implements PlayCapable {
     Queue<Card> hand = new LinkedList<>();
     String name;
 
+
     public Player(String name) {
         this.name = name;
     }
@@ -18,6 +19,11 @@ public class Player implements PlayCapable {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void addCardToHand(Card card) {
+        hand.add(card);
     }
 
     // Lehet, hogy kell még

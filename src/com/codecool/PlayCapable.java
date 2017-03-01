@@ -9,4 +9,5 @@ public interface PlayCapable {
 	public Integer choose();
 	public Card draw();
 	public String getName();
+	public void addCardToHand(Card card);
 }
