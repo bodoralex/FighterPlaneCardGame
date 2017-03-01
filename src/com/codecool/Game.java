@@ -83,9 +83,12 @@ public class Game {
 			cards.put(player.draw(), player);
 		}
 
+		Queue<Card> robotCards = new LinkedList<>();
+		robotCards.addAll(cards.keySet());
+
 		for (PlayCapable playCapable : players) {
 			if (playCapable instanceof Robot) {
-				(Robot) playCapable.setSeenCards(cards);
+				((Robot) playCapable).setSeenCards(robotCards);
 			}
 		}
 
@@ -96,10 +99,6 @@ public class Game {
 		Collections.sort(cardList, comparator);
 		PlayCapable winnerPlayerCapable = cards.get(cardList.get(0));
 		return winnerPlayerCapable;
-
-
-		// roundAttacker választása alapján sort egy playerCapables-listben...return 0.index...
-		return null;
 
 	}
 
@@ -194,10 +193,9 @@ public class Game {
 			}
 		}
 		scanner.close();
-		// deck.handout(gatherPlayers(), cardsNumber);
+		deck.handout(getPlayers(), cardsNumber);
 		printer.print("Cards are dealt.");
 	}
-
 
 	public void setPrinter(Printer printer) {
 		this.printer = printer;

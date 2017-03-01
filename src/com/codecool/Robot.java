@@ -1,40 +1,49 @@
 package com.codecool;
+import java.util.*;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Map;
-
-public class Robot implements PlayCapable{
+public class Robot implements PlayCapable {
     protected static int robots = 0;
+    private Double avgSpeed = 558.0;
+    private Double avgHeight = 10482.0;
+    private Double avgWeight = 4952.0;
+    private Double avgRange = 1072.0;
+    private ArrayList<Card> seenCards = new ArrayList<>();
+    private String name;
+    private Queue<Card> hand = new LinkedList<>();
+    private LinkedHashMap<String, Double> compareList = new LinkedHashMap<>();
+    private LinkedHashMap<String, Integer> attributeIdList = new LinkedHashMap<>();
 
     public Robot() {
         this.name = "Robot " + robots;
         robots++;
+        this.avgHeight = Math.random()*500;
+        this.avgRange = Math.random()*500;
+        this.avgWeight = Math.random()*500;
+        this.avgSpeed = Math.random()*200;
+
+    }
+    public ArrayList<Card> getSeenCards() {
+        return this.seenCards;
     }
 
     public String getName() {
         return this.name;
     }
 
-    private final Double AVGSPEED = 558.0;
-    private final Double AVGHEIGHT = 10482.0;
-    private final Double AVGWEIGHT = 4952.0;
-    private final Double AVGRANGE = 1072.0;
-    private String name;
-    private Queue<Card> hand = new LinkedList<>();
-    private Double afteravgSpeed, afteravgHeight, afteravgWeight, afteravgRange;
-    private LinkedHashMap<String, Double> compareList = new LinkedHashMap<>();
-    private LinkedHashMap<String, Integer> attributeIdList = new LinkedHashMap<>();
-    private Integer chosenAttributeNumber;
-
+    public void toPrinti(){
+        System.out.println(avgHeight);
+        System.out.println(avgWeight);
+        System.out.println(avgSpeed);
+        System.out.println(avgRange);
+    }
     @Override
     public Integer choose() {
         Card currentExamined = hand.peek();
-        afteravgSpeed = currentExamined.getSpeed() / AVGSPEED;
-        afteravgHeight = currentExamined.getMaxHeight() / AVGHEIGHT;
-        afteravgWeight = currentExamined.getMaxTakeoffWeight() / AVGWEIGHT;
-        afteravgRange = currentExamined.getRange() / AVGRANGE;
+
+        Double afteravgSpeed = currentExamined.getSpeed() / this.avgSpeed;
+        Double afteravgHeight = currentExamined.getMaxHeight() / this.avgHeight;
+        Double afteravgWeight = currentExamined.getMaxTakeoffWeight() / this.avgWeight;
+        Double afteravgRange = currentExamined.getRange() / this.avgRange;
         compareList.put("avgSpeed", afteravgSpeed);
         compareList.put("avgWeight", afteravgWeight);
         compareList.put("avgHeight", afteravgHeight);
@@ -56,55 +65,72 @@ public class Robot implements PlayCapable{
             }
         }
 
-        chosenAttributeNumber = attributeIdList.get(bestChoice);
-        return chosenAttributeNumber;
+        return attributeIdList.get(bestChoice);
 
     }
 
     @Override
     public Card draw() {
-
-        return null;
-
+        return hand.remove();
     }
 
+    public void setSeenCards(Queue<Card> cards) {
+        this.seenCards.addAll(cards);
+        this.updateAverages();
+    }
 
-	public void setHand(Queue<Card> cards) {
-		this.hand = cards;
-	}
+    private void updateAverages() {
 
-    public void addToHand(Card card) {
+        for(Card c : seenCards) {
+            avgSpeed += c.getSpeed();
+            avgRange += c.getRange();
+            avgWeight += c.getMaxTakeoffWeight();
+            avgHeight += c.getMaxHeight();
+        }
+        this.avgSpeed = avgSpeed / seenCards.size();
+        this.avgRange = avgRange / seenCards.size();
+        this.avgWeight = avgWeight / seenCards.size();
+        this.avgHeight = avgHeight / seenCards.size();
+    }
+
+    @Override
+    public void addCardToHand(Card card) {
         this.hand.add(card);
     }
 
 
-	public Queue<Card> getHand() {
-		return this.hand;
-	}
+    public Queue<Card> getHand() {
+        return this.hand;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Robot other = (Robot) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+    public void setHand(Queue<Card> cards) {
+        this.hand = cards;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if(obj == null)
+            return false;
+        if(getClass() != obj.getClass())
+            return false;
+        Robot other = (Robot) obj;
+        if(name == null) {
+            if(other.name != null)
+                return false;
+        } else if(!name.equals(other.name))
+            return false;
+        return true;
+    }
 
 }
