@@ -4,14 +4,14 @@ import java.util.*;
 
 public class Game {
 
-	private LinkedList<PlayCapable> players = new LinkedList<>();
-
+	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
+																	// private
 	private List<PlayCapable> playerList = new ArrayList<>();
 
 	private Printer printer;
 
 	public String parseKey() {
-		
+
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot", "borot", "ai", "bot");
 		List<String> exitAnswer = (List<String>) Arrays.asList("exit", "q", "quit", "done");
 
@@ -25,7 +25,7 @@ public class Game {
 			return "exit";
 		return input;
 	}
-	
+
 
 	public void gatherPlayers() {
 		printer.print("Let's set up the players!");
@@ -58,33 +58,67 @@ public class Game {
 		}
 	}
 
-	public PlayCapable round() {
-		Card[] cards = new Card[players.size()];
-		PlayCapable roundAttacker = roundAttacker();
-		roundAttacker.choose();
-		for (int i = 0; i < players.size(); i++) {
-			cards[i] = players.get(i).draw();
+	public void fillChoiceMap() {
+
+		choiceMap.put(1, new speedComparator());
+		choiceMap.put(2, new maxHeightComparator());
+		choiceMap.put(3, new maxTakeoffWeightComparator());
+		choiceMap.put(4, new rangeComparator());
+
+	}
+
+	public void awardWinner(List<Card> cards, PlayCapable winner) {
+		for (Card card: cards) {
+			winner.addCardToHand(card);
 		}
-		// roundAttacker választása alapján sort egy
-		// playerCapables-listben...return 0.index...
-		return null;
+	}
+
+	public PlayCapable round() {
+
+		fillChoiceMap();
+		Map<Card,PlayCapable> cards = new HashMap<>();
+		PlayCapable roundAttacker = roundAttacker();
+		int choice = roundAttacker.choose();
+
+		for (PlayCapable player: players) {
+			cards.put(player.draw(), player);
+		}
+
+		Queue<Card> robotCards = new LinkedList<>();
+		robotCards.addAll(cards.keySet());
+
+		for (PlayCapable playCapable : players) {
+			if (playCapable instanceof Robot) {
+				((Robot) playCapable).setSeenCards(robotCards);
+			}
+		}
+
+		Comparator comparator = choiceMap.get(choice);
+		Set<Card> cardSet = cards.keySet();
+		List<Card> cardList = new ArrayList<>();
+		cardList.addAll(cardSet);
+		Collections.sort(cardList, comparator);
+		PlayCapable winnerPlayerCapable = cards.get(cardList.get(0));
+		awardWinner(cardList, winnerPlayerCapable);
+		return winnerPlayerCapable;
+
 	}
 
 	public PlayCapable roundAttacker() { // legyenmáriterátor
 
-		if (playerList.size() == 0) {
+		if (changingPlayerList.size() == 0) {
 			for (PlayCapable playCapable : players) {
-				playerList.add(playCapable);
+				changingPlayerList.add(playCapable);
 			}
 		}
 
-		PlayCapable player = playerList.get(0);
-		playerList.remove(0);
+		PlayCapable player = changingPlayerList.get(0);
+		changingPlayerList.remove(0);
 		return player;
 
 	}
 
-	class SpeedComparator implements Comparator<Card> {
+	class speedComparator implements Comparator<Card> {
 
 		@Override
 		public int compare(Card c1, Card c2) {
@@ -160,6 +194,7 @@ public class Game {
 				printer.print("That is not an integer.");
 			}
 		}
+		scanner.close();
 		deck.handout(getPlayers(), cardsNumber);
 		printer.print("Cards are dealt.");
 		scanner.close();
@@ -173,4 +208,5 @@ public class Game {
 	public List<PlayCapable> getPlayers() {
 		return players;
 	}
+
 }
