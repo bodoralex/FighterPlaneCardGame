@@ -47,11 +47,7 @@ public class Player implements PlayCapable {
 
 	@Override
 	public void addToHand(Card card) {
-
+		hand.add(card);
 	}
-
-
-    
-    
 
 }
