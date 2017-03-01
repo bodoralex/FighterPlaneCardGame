@@ -21,16 +21,14 @@ public class Main {
 		game.round();
 		game.round();
 
-		
-
-
-		// System.out.println(game.round().getName());
-		// System.out.println(game.round().getName());
-		// System.out.println(game.round().getName());
-		//
-		//
-		//
-		// //game.play();
-		// scanner.close();
+		/*
+		 *TODO befejezni a play()-t elfogyottEMárvalakinekAKártyája() metódussal
+		 *felugró képek
+		 *esetleg más cardokkal is kompatibilis legyen
+		 *hibakezelések
+		 *fun
+		 *amúgyszépmunka
+		 *todo-k megcsinálása 
+		 */
 	}
 }
