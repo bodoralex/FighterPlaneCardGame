@@ -14,7 +14,7 @@ public class Game {
 	public String parseKey() {
 
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot", "borot", "ai", "bot");
-		List<String> exitAnswer = (List<String>) Arrays.asList("exit", "q", "quit", "done");
+		List<String> exitAnswer = (List<String>) Arrays.asList("k","exit", "q", "quit", "done");
 
 		Scanner scanner = new Scanner(System.in);
 		String inputScan = scanner.next();
@@ -79,8 +79,8 @@ public class Game {
 		fillChoiceMap();
 		Map<Card,PlayCapable> cards = new HashMap<>();
 		PlayCapable roundAttacker = roundAttacker();
+		
 		int choice = roundAttacker.choose();
-
 		for (PlayCapable player: players) {
 			cards.put(player.draw(), player);
 		}

@@ -14,11 +14,11 @@ public class Main {
 		deck.fillDeck(Card.values());
 		deck.shuffleCards();
 		game.deal(deck);
+		game.round();
 		
-		System.out.println(game.getPlayers().get(0).getDeck().remove());
 		
 		
-//		game.play();
+		//game.play();
 
 	}
 }

@@ -27,8 +27,8 @@ public class Player implements PlayCapable {
 
     public void checkMyCard() {
         Card topCard = hand.peek();
-        printer.print(topCard);
-        printer.print("Choose the attribute you want to use");
+        System.out.println(topCard);
+        System.out.println("Choose the attribute you want to use");
     }
 
     @Override
@@ -38,15 +38,45 @@ public class Player implements PlayCapable {
 
     @Override
     public Integer choose() {
+    	Scanner scannr = new Scanner(System.in);
         checkMyCard();
         boolean goodInput = false;
         while (!goodInput) {
-            int playerChoice = scanner.nextInt();
+            Integer playerChoice = Integer.parseInt(scannr.next());
             if (playerChoice == 1 || playerChoice == 2 || playerChoice == 3 || playerChoice == 4) {
                 return playerChoice;
             }
-        }
+        }	printer.print("Wrong number.");
         return 0;
     }
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Player other = (Player) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 
 }
