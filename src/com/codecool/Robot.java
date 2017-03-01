@@ -48,10 +48,10 @@ public class Robot implements PlayCapable {
 		compareList.put("avgWeight", afteravgWeight);
 		compareList.put("avgHeight", afteravgHeight);
 		compareList.put("avgRange", afteravgRange);
-		attributeIdList.put("avgSpeed", 0);
-		attributeIdList.put("avgHeight", 1);
-		attributeIdList.put("avgWeight", 2);
-		attributeIdList.put("avgRange", 3);
+		attributeIdList.put("avgSpeed", 1);
+		attributeIdList.put("avgHeight", 2);
+		attributeIdList.put("avgWeight", 3);
+		attributeIdList.put("avgRange", 4);
 		Double currentExaminedAttribute = 0.0;
 		String bestChoice = "";
 		for (Double d : compareList.values()) {
