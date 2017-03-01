@@ -1,4 +1,5 @@
 package com.codecool;
+
 import java.util.*;
 
 public class Robot implements PlayCapable {
@@ -16,26 +17,25 @@ public class Robot implements PlayCapable {
     public Robot() {
         this.name = "Robot " + robots;
         robots++;
-        this.avgHeight = Math.random()*500;
-        this.avgRange = Math.random()*500;
-        this.avgWeight = Math.random()*500;
-        this.avgSpeed = Math.random()*200;
-
+        this.avgHeight = Math.random() * 500;
+        this.avgRange = Math.random() * 500;
+        this.avgWeight = Math.random() * 500;
+        this.avgSpeed = Math.random() * 200;
     }
+
     public ArrayList<Card> getSeenCards() {
         return this.seenCards;
+    }
+
+    public void setSeenCards(Queue<Card> cards) {
+        this.seenCards.addAll(cards);
+        this.updateAverages();
     }
 
     public String getName() {
         return this.name;
     }
 
-    public void toPrinti(){
-        System.out.println(avgHeight);
-        System.out.println(avgWeight);
-        System.out.println(avgSpeed);
-        System.out.println(avgRange);
-    }
     @Override
     public Integer choose() {
         Card currentExamined = hand.peek();
@@ -65,19 +65,18 @@ public class Robot implements PlayCapable {
             }
         }
 
-		return attributeIdList.get(bestChoice);
+        return attributeIdList.get(bestChoice);
 
-	}
+    }
 
-	@Override
-	public Card draw() {
+    @Override
+    public Card draw() {
 
-        return null;
+        return this.hand.remove();
     }
 
     private void updateAverages() {
-
-        for(Card c : seenCards) {
+        for(Card c : this.seenCards) {
             avgSpeed += c.getSpeed();
             avgRange += c.getRange();
             avgWeight += c.getMaxTakeoffWeight();
@@ -89,15 +88,9 @@ public class Robot implements PlayCapable {
         this.avgHeight = avgHeight / seenCards.size();
     }
 
-
-	public OurQueue<Card> getHand() {
-		return this.hand;
-	}
-    public void setSeenCards(Queue<Card> cards) {
-        this.seenCards.addAll(cards);
-        this.updateAverages();
+    public OurQueue<Card> getHand() {
+        return this.hand;
     }
-
 
     public void setHand(OurQueue<Card> cards) {
         this.hand = cards;
@@ -128,10 +121,10 @@ public class Robot implements PlayCapable {
         return true;
     }
 
-	@Override
-	public void addCardToHand(Card card) {
-		hand.add(card);
+    @Override
+    public void addCardToHand(Card card) {
+        hand.add(card);
 
-	}
+    }
 
 }
