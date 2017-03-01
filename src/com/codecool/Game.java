@@ -4,20 +4,19 @@ import java.util.*;
 
 public class Game {
 
-	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
-																	// private
+	private List<PlayCapable> players = new ArrayList<>();
+																
 	private List<PlayCapable> playerList = new ArrayList<>();
 
 	private Printer printer;
 
-	
-	public String parseKey(){
-	
+	public String parseKey(){	
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot","borot", "ai", "bot");
 		List<String> exitAnswer = (List<String>) Arrays.asList("exit", "q", "quit", "done");
 		
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.next().trim().toLowerCase();
+		scanner.close();
 		if(robotAnswer.contains(input)) return "robot";
 		if(exitAnswer.contains(input)) return "exit";
 		return input;
@@ -56,20 +55,17 @@ public class Game {
 	}
 
 	public PlayCapable round() {
-
 		Card[] cards = new Card[players.size()];
 		PlayCapable roundAttacker = roundAttacker();
 		roundAttacker.choose();
 		for (int i=0; i< players.size(); i++) {
 			cards[i] = players.get(i).draw();
 		}
-
 		// roundAttacker választása alapján sort egy playerCapables-listben...return 0.index...
 		return null;
-
 	}
 
-	public PlayCapable roundAttacker() {
+	public PlayCapable roundAttacker() {  //legyenmáriterátor
 
 		if (playerList.size() == 0) {
 			for (PlayCapable playCapable : players) {
@@ -171,5 +167,4 @@ public class Game {
 	public List<PlayCapable> getPlayers(){
 		return players;
 	}
-
 }

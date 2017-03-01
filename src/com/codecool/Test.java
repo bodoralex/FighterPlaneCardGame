@@ -9,10 +9,7 @@ import java.util.Scanner;
 public class Test {
 
 	public static void main(String[] args) {
-		Scanner scn = new Scanner(System.in);
-		String kok = scn.next();
-		boolean kek = kok.equals("");
-		System.out.println(kek);
+		System.out.println(Integer.compare(4, 5));
 		
 	}
 
