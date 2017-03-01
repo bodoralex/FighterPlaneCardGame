@@ -9,6 +9,9 @@ public class Player implements PlayCapable {
     Printer printer = new Printer();
     OurQueue<Card> hand = new OurQueue<>();
     String name;
+    public String toString(){
+    	return name;
+    }
 
     public Player(String name) {
         this.name = name;
@@ -78,6 +81,15 @@ public class Player implements PlayCapable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public OurQueue<Card> getHand() {
+		return hand;
+	}
+	@Override
+	public int cardsRemaining() {
+		return getHand().size();
 	}
 
 }

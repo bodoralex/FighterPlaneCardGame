@@ -5,9 +5,18 @@ import java.util.*;
 public class Game {
 
 	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
-																	// private
+															// private
 	private List<PlayCapable> changingPlayerList = new ArrayList<>();
-	private Map<Integer, Comparator> choiceMap = new HashMap<>();
+
+	private final Map<Integer, Comparator> choiceMap = new TreeMap<Integer, Comparator>() {
+		{
+			put(1, new speedComparator());
+			put(2, new maxHeightComparator());
+			put(3, new maxTakeoffWeightComparator());
+			put(4, new rangeComparator());
+		};
+
+	};
 
 	private Printer printer;
 
@@ -15,18 +24,17 @@ public class Game {
 		Scanner scanner = new Scanner(System.in);
 
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot", "borot", "ai", "bot");
-		List<String> exitAnswer = (List<String>) Arrays.asList("k","exit", "q", "quit", "done");
+		List<String> exitAnswer = (List<String>) Arrays.asList("k", "exit", "q", "quit", "done");
 
 		String inputScan = scanner.next();
 		String input = inputScan.trim().toLowerCase();
-		
+
 		if (robotAnswer.contains(input))
 			return "robot";
 		if (exitAnswer.contains(input))
 			return "exit";
 		return input;
 	}
-
 
 	public void gatherPlayers() {
 		printer.print("Let's set up the players!");
@@ -59,7 +67,7 @@ public class Game {
 		}
 	}
 
-	public void fillChoiceMap() {
+	public void fillChoiceMap() { // TODO rmovable
 
 		choiceMap.put(1, new speedComparator());
 		choiceMap.put(2, new maxHeightComparator());
@@ -68,23 +76,24 @@ public class Game {
 
 	}
 
-	public void awardWinner(List<Card> cards, PlayCapable winner) {
-		for (Card card: cards) {
+	public void awardWinner(TreeMap<Card, PlayCapable> map) {
+		PlayCapable winner = map.firstEntry().getValue();
+		for (Card card : map.keySet()) {
 			winner.addCardToHand(card);
 		}
 	}
 
 	public PlayCapable round() {
 
-		fillChoiceMap();
-		Map<Card,PlayCapable> cards = new HashMap<>();
+		Map<Card, PlayCapable> cards = new HashMap<>();
+
 		PlayCapable roundAttacker = roundAttacker();
-		
+
 		int choice = roundAttacker.choose();
-		for (PlayCapable player: players) {
+
+		for (PlayCapable player : players) {
 			cards.put(player.draw(), player);
 		}
-
 		Queue<Card> robotCards = new LinkedList<>();
 		robotCards.addAll(cards.keySet());
 
@@ -94,15 +103,17 @@ public class Game {
 			}
 		}
 
-		Comparator comparator = choiceMap.get(choice);
-		Set<Card> cardSet = cards.keySet();
-		List<Card> cardList = new ArrayList<>();
-		cardList.addAll(cardSet);
-		Collections.sort(cardList, comparator);
-		PlayCapable winnerPlayerCapable = cards.get(cardList.get(0));
-		awardWinner(cardList, winnerPlayerCapable);
-		return winnerPlayerCapable;
+		TreeMap<Card, PlayCapable> sorted = new TreeMap<Card, PlayCapable>(choiceMap.get(choice));
+		sorted.putAll(cards);
+		System.out.println(choice);
+		System.out.println(sorted);
 
+		PlayCapable winner = sorted.firstEntry().getValue();
+		System.out.println(winner);
+
+		awardWinner(sorted);
+
+		return winner;
 	}
 
 	public PlayCapable roundAttacker() { // legyenmáriterátor
@@ -115,7 +126,7 @@ public class Game {
 
 		PlayCapable player = changingPlayerList.get(0);
 		changingPlayerList.remove(0);
-		return player;
+		return player; // TODO return remove
 
 	}
 

@@ -11,5 +11,8 @@ public interface PlayCapable {
 	public Card draw();
 	public String getName();
 	public void addCardToHand(Card card);
+	public OurQueue<Card> getHand();
+	public String toString();
+	public int cardsRemaining();
 
 }

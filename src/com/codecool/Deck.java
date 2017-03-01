@@ -32,7 +32,7 @@ public class Deck {
 		int cardsPersPlayer = (int) Math.floor(players.size() / cardsNumber);
 		for (int i = 0; i < players.size(); i++) {
 			for (int j = 0; j < cardsNumber; j++) {
-				players.get(i).addCardToHand(cards.get(j));
+				players.get(i).addCardToHand(cards.remove(j));
 			}
 		}
 	}
