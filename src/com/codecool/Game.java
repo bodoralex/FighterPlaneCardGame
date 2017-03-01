@@ -111,6 +111,12 @@ public class Game {
 
 		awardWinner(sorted);
 		printer.print("-----------------------------------------------------------------");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return winner;
 	}
@@ -195,6 +201,7 @@ public class Game {
 
 	public void deal(Deck deck) {
 		printer.print("How many cards do you want to play with?");
+		printer.print("The maximum card number is: "+ deck.deckSize());
 		Integer cardsNumber = new Integer(0);
 		while (cardsNumber.equals(0)) {
 			try {
