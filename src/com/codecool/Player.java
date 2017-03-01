@@ -19,26 +19,29 @@ public class Player implements PlayCapable {
 	}
 
 	@Override
-	public void attack() {
+	public Integer choose() {
+		return null;
+
+	}
+
+	@Override
+	public void draw() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void defense() {
-		// TODO Auto-generated method stub
+	public void addToHand(Card card) {
 
 	}
 
 	@Override
 	public void setHand(Queue<Card> cards) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public Queue<Card> getHand() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

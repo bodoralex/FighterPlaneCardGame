@@ -3,9 +3,9 @@ package com.codecool;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Map;
 
 public class Robot implements PlayCapable{
-    protected String name;
     protected static int robots = 0;
 
     public Robot() {
@@ -67,8 +67,7 @@ public class Robot implements PlayCapable{
 
 	@Override
 	public void setHand(Queue<Card> cards) {
-		// TODO Auto-generated method stub
-		
+		this.hand = cards;
 	}
     @Override
     public void addToHand(Card card) {
@@ -77,8 +76,7 @@ public class Robot implements PlayCapable{
 
 	@Override
 	public Queue<Card> getHand() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.hand;
 	}
 
 	@Override
