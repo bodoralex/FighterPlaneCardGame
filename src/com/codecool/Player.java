@@ -29,7 +29,6 @@ public class Player implements PlayCapable {
         Card topCard = hand.peek();
         printer.print(topCard);
         printer.print("Choose the attribute you want to use");
-        return choose();
     }
 
     @Override
@@ -49,10 +48,5 @@ public class Player implements PlayCapable {
         }
         return 0;
     }
-
-	@Override
-	public void addToHand(Card card) {
-		hand.add(card);
-	}
 
 }

@@ -6,7 +6,8 @@ public class Game {
 
 	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
 																	// private
-	private List<PlayCapable> playerList = new ArrayList<>();
+	private List<PlayCapable> changingPlayerList = new ArrayList<>();
+	private Map<Integer, Comparator> choiceMap = new HashMap<>();
 
 	private Printer printer;
 
