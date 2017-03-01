@@ -2,18 +2,27 @@ package com.codecool;
 
 public class Main {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        Deck deck = new Deck();
-        deck.listFiller();
-        System.out.println(deck.cards.get(1).getSpeed());
-        
-        
+		// Deck deck = new Deck();
+		// deck.listFiller();
+		// System.out.println(deck.cards.get(1).getSpeed());
+		//
+
 		Game game = new Game();
-		game.getplayers();
-		game.getCards(Card.values());
-		game.deal();
-		//game.play();
+		Deck deck = new Deck();
+		Printer printer = new Printer();
+		game.setPrinter(printer);
+		game.getPlayers();
+		game.players.forEach(System.out::println);
+		
+		
+//		deck.fillDeck(Card.values());
+//		deck.shuffleCards();
+//		
+//		game.deal(deck);
+		
+		// game.play();
 
-    }
+	}
 }

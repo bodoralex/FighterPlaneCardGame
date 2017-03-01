@@ -1,6 +1,7 @@
 package com.codecool;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -9,9 +10,15 @@ import java.util.Collections;
 public class Deck {
 
 	private ArrayList<Card> cards = new ArrayList<>();
+	
+	public Deck(){};
+	
+	public Deck(Card[] cards){
+		this.cards = (ArrayList<Card>) Arrays.asList(cards);
+	}
 
-	public void listFiller() {
-		for (Card card : Card.values()) {
+	public void fillDeck(Card[] cardsToAdd) {
+		for (Card card : cardsToAdd) {
 			cards.add(card);
 		}
 	}
@@ -20,7 +27,7 @@ public class Deck {
 		Collections.shuffle(cards);
 	}
 	
-	public void handout(ArrayList<Player> players, int cardsNumber) {
+	public void handout(ArrayList<PlayCapable> players, int cardsNumber) {
 		int cardsPersPlayer = (int) Math.floor(players.size() / cardsNumber);
 		for (int i = 0; i < players.size(); i++) {
 			for (int j = 0; j < cardsNumber; j++) {
