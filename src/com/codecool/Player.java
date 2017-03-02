@@ -5,65 +5,81 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+import javax.swing.JFileChooser;
+
 public class Player implements PlayCapable {
 
-    Printer printer = new Printer();
-    OurQueue<Card> hand = new OurQueue<>();
-    String name;
-    public String toString(){
-    	return name;
-    }
+	Printer printer = new Printer();
+	OurQueue<Card> hand = new OurQueue<>();
+	String name;
 
-    public Player(String name) {
-        this.name = name;
-    }
+	public String toString() {
+		return name;
+	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+	public Player(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public void addCardToHand(Card card) {
-        hand.add(card);
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    public void checkMyCard() {
-        Card topCard = hand.peek();
-        printer.print(topCard);
-        printer.print("Choose the attribute you want to use");
-    }
+	@Override
+	public void addCardToHand(Card card) {
+		hand.add(card);
+	}
 
-    @Override
-    public Card draw() {
-        return hand.remove();
-    }
+	public void checkMyCard() {
+		Card topCard = hand.peek();
+		printer.print(topCard);
+		printer.print("Choose the attribute you want to use");
+	}
 
-    @Override
-    public Integer choose() {
-        try {
+	@Override
+	public Card draw() {
+		return hand.remove();
+	}
 
-            DisplayImage dsplyImage = new DisplayImage(hand.peek());
-            dsplyImage.start();
-            if(!dsplyImage.isAlive()) {
-                //return dsplyImage.getChoosenNumber();
-				return dsplyImage.getChoosenNumber();
-            }
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        checkMyCard();
-        boolean goodInput = false;
+	@Override
+	public Integer choose() {
+		int result = 0;
 
-        while (!goodInput) {
-        	String input = Main.scanner.next().trim();
-            Integer playerChoice = Integer.parseInt(input);
-            if (playerChoice == 1 || playerChoice == 2 || playerChoice == 3 || playerChoice == 4) {
-                return playerChoice;
-            }
-        }	printer.print("Wrong number.");
-        return 0;
-    }
+		try {
+			DisplayImage dsplyImage = new DisplayImage(hand.peek());
+			while (result == 0) {
+				result = dsplyImage.getChoosenNumber();
+				//System.out.println(result);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (result != 0) {
+			System.out.println("return: " +  result);
+			return result;
+		}
+
+		checkMyCard();
+		boolean goodInput = false;
+
+		while (!goodInput) {
+			String input = Main.scanner.next().trim();
+			Integer playerChoice = Integer.parseInt(input);
+			if (playerChoice == 1 || playerChoice == 2 || playerChoice == 3 || playerChoice == 4) {
+				return playerChoice;
+			}
+		}
+		printer.print("Wrong number.");
+		return 0;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -98,6 +114,7 @@ public class Player implements PlayCapable {
 	public OurQueue<Card> getHand() {
 		return hand;
 	}
+
 	@Override
 	public int cardsRemaining() {
 		return getHand().size();

@@ -9,10 +9,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+
 /**
  * Created by Lovi on 2017. 03. 02. @ 0:43.
  */
-public class DisplayImage extends Thread{
+public class DisplayImage {
             JFrame frame = new JFrame();
             JLabel lbl = new JLabel();
             JLabel lbl2 = new JLabel("Your plane: ");
@@ -25,9 +26,6 @@ public class DisplayImage extends Thread{
 
     public DisplayImage(Card c) throws IOException {
         cardGot = c;
-    }
-
-    public void run(){
         BufferedImage originalImage = null;
         try {
             originalImage = ImageIO.read(new File("src//" + cardGot.getID()));
@@ -47,14 +45,28 @@ public class DisplayImage extends Thread{
             frame.add(button2);
             frame.add(button3);
             frame.add(button4);
-            button1.addActionListener(new SpeedActionListener());
+            //button1.addActionListener(new SpeedActionListener());
             frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+            
+            button1.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				numToReturn = 1;
+    			}
+    		});
+            
+            //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+    
+    
 
 
-    public static BufferedImage resizeImage(BufferedImage originalImage, int type){
+
+    public Integer getNumToReturn() {
+		return numToReturn;
+	}
+
+
+	public static BufferedImage resizeImage(BufferedImage originalImage, int type){
         BufferedImage resizedImage = new BufferedImage(512, 256, type);
         Graphics2D g = resizedImage.createGraphics();
         g.drawImage(originalImage, 0, 0, 512, 256, null);
@@ -64,11 +76,9 @@ public class DisplayImage extends Thread{
     }
 
     public class SpeedActionListener implements ActionListener {
-        Integer numToReturn = 0;
-        SpeedActionListener(){
-        }
         public void actionPerformed(ActionEvent e) {
-            button1.setText("Button pressed");
+            numToReturn = 1;
+            System.out.println(numToReturn);
         }
     }
     public Integer getChoosenNumber(){
