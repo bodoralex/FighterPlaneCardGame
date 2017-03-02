@@ -1,12 +1,32 @@
 package com.codecool;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.List;
 
 public class Game {
 
 	private List<PlayCapable> players = new ArrayList<>();
 	private List<PlayCapable> changingPlayerList = new ArrayList<>();
+	public	String textInput = " ";
+	public String userWord=" ";
+	public JButton submit = new JButton("OK");
+	public JButton submit2 = new JButton("Done");
+	public JTextField textField = new JTextField("Type here");
+	public void submitAction(){
+		userWord = textField.getText();
+	}
+
+	public void setGathering(boolean gathering) {
+		this.gathering = gathering;
+	}
+
+	public boolean gathering=false;
 	private Printer printer;
+	public Integer cardsNumber = 0;
 	private final String[] attrs = { "Max Speed", "Max Height", "Max Takeoff weigth", "Maximum range" };
 	private final Map<Integer, Comparator> choiceMap = new TreeMap<Integer, Comparator>() {
 		{
@@ -19,19 +39,19 @@ public class Game {
 	};
 
 	public String parseKey() {
-		Scanner scanner = new Scanner(System.in);
 
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot", "borot", "ai", "bot");
 		List<String> exitAnswer = (List<String>) Arrays.asList("k", "exit", "q", "quit", "done");
 
-		String inputScan = scanner.next();
-		String input = inputScan.trim().toLowerCase();
 
-		if (robotAnswer.contains(input))
+		if (robotAnswer.contains(textInput))
 			return "robot";
-		if (exitAnswer.contains(input))
+		if (exitAnswer.contains(textInput))
 			return "exit";
-		return input;
+		if (textInput!="") {
+			return textInput;
+		}
+		return textInput;
 	}
 
 	public void gatherPlayers() {
@@ -40,17 +60,44 @@ public class Game {
 				"Please enter the name of the %s. player. " + "Or enter Robot, if you would like to add a robot :).",
 				players.size()));
 		printer.print("Enter 'done' if you wouldn't like to add nem player");
-		boolean gathering = true;
+
 		while (gathering) {
-			String input = parseKey();
-			if (input.equals("exit")) {
+			gathering = false;
+			JFrame frame = new JFrame();
+			frame.setLayout(new FlowLayout());
+			frame.setSize(600,350);
+			JLabel lbl = new JLabel("Lets set up the players!");
+			frame.add(lbl);
+			textField.setText("Enter player name here!");
+			textField.setVisible(true);
+			frame.add(textField);
+			frame.add(submit);
+			frame.add(submit);
+			frame.setVisible(true);
+
+			submit.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					submitAction();
+					setGathering(true);
+					frame.setVisible(false);
+				}
+			});
+			submit2.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					submitAction();
+					setGathering(false);
+				}
+			});
+			if (userWord.equals("exit")) {
 				gathering = false;
-			} else if (input.equals("robot")) {
+			} else if (userWord.equals("robot")) {
 				PlayCapable robot = new Robot();
 				players.add(robot);
 				printer.print(String.format("%s added", robot.getName()));
 			} else {
-				PlayCapable player = new Player(input);
+				PlayCapable player = new Player(userWord);
 				if (players.contains(player)) {
 					try {
 						throw new NameTakenException();
@@ -212,24 +259,43 @@ public class Game {
 	}
 
 	public void deal(Deck deck) {
-		printer.print("How many cards do you want to play with?");
-		printer.print("The maximum card number is: " + deck.deckSize());
-		Integer cardsNumber = new Integer(0);
-		while (cardsNumber.equals(0)) {
+
+		//printer.print("How many cards do you want to play with?");
+		//printer.print("The maximum card number is: " + deck.deckSize());
+
+		while (Integer.parseInt(userWord)==0) {
 			try {
-				String howMany = Main.scanner.next().trim();
-				cardsNumber = Integer.parseInt(howMany);
-				while (cardsNumber > 40 || cardsNumber < 1 || cardsNumber == -1 || cardsNumber < players.size()) {
-					printer.print("Wrong number input! Try again!");
-					howMany = Main.scanner.next().trim();
-					cardsNumber = Integer.parseInt(howMany);
+				JFrame frame = new JFrame();
+				frame.setLayout(new FlowLayout());
+				frame.setSize(600,350);
+				JLabel lbl = new JLabel("How many cards would you like to play with? (2-40)");
+				frame.add(lbl);
+				textField.setVisible(true);
+				frame.add(textField);
+				frame.add(submit);
+				submit.setText("OK");
+				frame.setVisible(true);
+				submit.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						submitAction();
+						frame.setVisible(false);
+					}
+				});
+		//		String howMany = Main.scanner.next().trim();
+				//
+				while (Integer.parseInt(userWord) > 40 || Integer.parseInt(userWord) < 1 || Integer.parseInt(userWord) == -1 || Integer.parseInt(userWord) < players.size()) {
+				//	printer.print("Wrong number input! Try again!");
+				//	howMany = Main.scanner.next().trim();
+				//	cardsNumber = Integer.parseInt(howMany);
+					lbl.setText("Wrong number input! Try again!");
 				}
 			} catch (Exception e) {
 				printer.print("That is not an integer.");
 			}
 		}
-		deck.handout(getPlayers(), cardsNumber);
-		printer.print("Cards are dealt.");
+		deck.handout(getPlayers(), Integer.parseInt(userWord));
+	//	printer.print("Cards are dealt.");
 	}
 
 	public void setPrinter(Printer printer) {
