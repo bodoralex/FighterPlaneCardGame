@@ -14,7 +14,7 @@ public class Deck {
 	private ArrayList<Card> cards = new ArrayList<>();
 
 	public Deck() {
-	};
+	}
 
 	public Deck(Card[] cards) {
 		this.cards = (ArrayList<Card>) Arrays.asList(cards);
@@ -44,6 +44,7 @@ public class Deck {
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
+
 	public int deckSize(){
 		return getCards().size();
 	}

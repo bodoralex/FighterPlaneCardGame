@@ -4,22 +4,19 @@ import java.util.*;
 
 public class Game {
 
-	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
-															// private
+	private List<PlayCapable> players = new ArrayList<>();
 	private List<PlayCapable> changingPlayerList = new ArrayList<>();
-
+	private Printer printer;
+	private final String[] attrs = { "Max Speed", "Max Height", "Max Takeoff weigth", "Maximum range" };
 	private final Map<Integer, Comparator> choiceMap = new TreeMap<Integer, Comparator>() {
 		{
 			put(1, new speedComparator());
 			put(2, new maxHeightComparator());
 			put(3, new maxTakeoffWeightComparator());
 			put(4, new rangeComparator());
-		};
+		}
 
 	};
-	static final String[] attrs = { "Max Speed", "Max Height", "Max Takeoff weigth", "Maximum range" };
-
-	private Printer printer;
 
 	public String parseKey() {
 		Scanner scanner = new Scanner(System.in);
@@ -117,14 +114,13 @@ public class Game {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return winner;
 	}
 
-	public PlayCapable roundAttacker() { // legyenmáriterátor
+	public PlayCapable roundAttacker() {
 
 		if (changingPlayerList.size() == 0) {
 			for (PlayCapable playCapable : players) {
@@ -138,7 +134,7 @@ public class Game {
 			player = changingPlayerList.get(0);
 		}
 		changingPlayerList.remove(0);
-		return player; // TODO return remove
+		return player;
 
 	}
 
@@ -229,7 +225,6 @@ public class Game {
 
 	public void setPrinter(Printer printer) {
 		this.printer = printer;
-
 	}
 
 	public List<PlayCapable> getPlayers() {

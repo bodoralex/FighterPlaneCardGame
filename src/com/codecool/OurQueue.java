@@ -12,7 +12,7 @@ package com.codecool;
 
 public class OurQueue<Card> {
 	
-	Object[] deck = new Object[0];
+	private Object[] deck = new Object[0];
 	
 	public void add(Card card){
 		Object[] newDeck = new Object[deck.length+1];
@@ -21,8 +21,8 @@ public class OurQueue<Card> {
 		}
 		newDeck[newDeck.length-1] = card;
 		deck = newDeck;
-
 	}
+
 	public Card remove(){
 		Object[] newDeck = new Object[deck.length-1];
 		for (int i = 1; i < deck.length; i++) {
@@ -32,10 +32,11 @@ public class OurQueue<Card> {
 		deck = newDeck;
 		return firstElem;
 	}
+
 	public Card peek(){
 		return (Card) deck[0];
-		
 	}
+
 	public int size(){
 		return deck.length;
 	}
