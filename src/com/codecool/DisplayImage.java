@@ -38,9 +38,11 @@ public class DisplayImage {
         }
         int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
             BufferedImage resizedImage = resizeImage(originalImage,type);
-
             frame.setLayout(new FlowLayout());
-            frame.setSize(600,350);
+            frame.setResizable(false);
+            frame.setSize(550,375);
+            frame.setAlwaysOnTop(true);
+            frame.setLocationRelativeTo(null);
             ImageIcon icon = new ImageIcon(resizedImage);
             lbl.setIcon(icon);
             lbl2.setText("Players card: "+cardGot.getName());
