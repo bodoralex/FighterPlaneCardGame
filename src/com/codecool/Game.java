@@ -214,6 +214,11 @@ public class Game {
 			try {
 				String howMany = Main.scanner.next().trim();
 				cardsNumber = Integer.parseInt(howMany);
+				while(cardsNumber>40 || cardsNumber<1 || cardsNumber == -1 || cardsNumber< players.size()) {
+					printer.print("Wrong number input! Try again!");
+					howMany = Main.scanner.next().trim();
+					cardsNumber = Integer.parseInt(howMany);
+				}
 			} catch (Exception e) {
 				printer.print("That is not an integer.");
 			}
