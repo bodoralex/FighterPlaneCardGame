@@ -42,8 +42,12 @@ public class Player implements PlayCapable {
     @Override
     public Integer choose() {
         try {
+
             DisplayImage dsplyImage = new DisplayImage(hand.peek());
             dsplyImage.start();
+            if(!dsplyImage.isAlive()) {
+                return dsplyImage.getChoosenNumber();
+            }
         } catch(IOException e) {
             e.printStackTrace();
         }
