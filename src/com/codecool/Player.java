@@ -46,7 +46,8 @@ public class Player implements PlayCapable {
             DisplayImage dsplyImage = new DisplayImage(hand.peek());
             dsplyImage.start();
             if(!dsplyImage.isAlive()) {
-                return dsplyImage.getChoosenNumber();
+                //return dsplyImage.getChoosenNumber();
+				return dsplyImage.getChoosenNumber();
             }
         } catch(IOException e) {
             e.printStackTrace();

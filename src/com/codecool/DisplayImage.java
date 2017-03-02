@@ -47,7 +47,7 @@ public class DisplayImage extends Thread{
             frame.add(button2);
             frame.add(button3);
             frame.add(button4);
-            button1.addActionListener(new SpeedActionListener(this.numToReturn));
+            button1.addActionListener(new SpeedActionListener());
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -65,17 +65,13 @@ public class DisplayImage extends Thread{
 
     public class SpeedActionListener implements ActionListener {
         Integer numToReturn = 0;
-        SpeedActionListener(Integer numToReturn){
-        this.numToReturn = numToReturn;
+        SpeedActionListener(){
         }
         public void actionPerformed(ActionEvent e) {
-            button1.setText("1");
-            frame.setVisible(false);
-            Integer num =Integer.parseInt(e.getSource().toString());
-            getChoosenNumber(num);
+            button1.setText("Button pressed");
         }
     }
-    public Integer getChoosenNumber(Integer num){
-        return num;
+    public Integer getChoosenNumber(){
+        return this.numToReturn;
     }
 }
