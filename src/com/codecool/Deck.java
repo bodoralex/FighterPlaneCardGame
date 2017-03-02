@@ -13,13 +13,6 @@ public class Deck {
 
 	private ArrayList<Card> cards = new ArrayList<>();
 
-	public Deck() {
-	}
-
-	public Deck(Card[] cards) {
-		this.cards = (ArrayList<Card>) Arrays.asList(cards);
-	}
-
 	public void fillDeck(Card[] cardsToAdd) {
 		for (Card card : cardsToAdd) {
 			cards.add(card);

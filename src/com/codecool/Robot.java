@@ -23,10 +23,6 @@ public class Robot implements PlayCapable {
 		this.avgSpeed = Math.random() * 200;
 	}
 
-	public ArrayList<Card> getSeenCards() {
-		return this.seenCards;
-	}
-
 	public void setSeenCards(Queue<Card> cards) {
 		this.seenCards.addAll(cards);
 		this.updateAverages();
@@ -34,6 +30,31 @@ public class Robot implements PlayCapable {
 
 	public String getName() {
 		return this.name;
+	}
+
+	public OurQueue<Card> getHand() {
+		return this.hand;
+	}
+
+	public Card peek() {
+		return hand.peek();
+	}
+
+	public String toString() {
+		return name;
+	}
+
+	private void updateAverages() {
+		for (Card c : this.seenCards) {
+			avgSpeed += c.getSpeed();
+			avgRange += c.getRange();
+			avgWeight += c.getMaxTakeoffWeight();
+			avgHeight += c.getMaxHeight();
+		}
+		this.avgSpeed = avgSpeed / seenCards.size();
+		this.avgRange = avgRange / seenCards.size();
+		this.avgWeight = avgWeight / seenCards.size();
+		this.avgHeight = avgHeight / seenCards.size();
 	}
 
 	@Override
@@ -71,38 +92,7 @@ public class Robot implements PlayCapable {
 
 	@Override
 	public Card draw() {
-
 		return this.hand.remove();
-	}
-
-	public String toString() {
-
-		return name;
-
-	}
-
-	private void updateAverages() {
-		for (Card c : this.seenCards) {
-			avgSpeed += c.getSpeed();
-			avgRange += c.getRange();
-			avgWeight += c.getMaxTakeoffWeight();
-			avgHeight += c.getMaxHeight();
-		}
-		this.avgSpeed = avgSpeed / seenCards.size();
-		this.avgRange = avgRange / seenCards.size();
-		this.avgWeight = avgWeight / seenCards.size();
-		this.avgHeight = avgHeight / seenCards.size();
-	}
-
-	public OurQueue<Card> getHand() {
-		return this.hand;
-	}
-
-	public void setHand(OurQueue<Card> cards) {
-		this.hand = cards;
-	}
-	public Card peek() {
-		return hand.peek();
 	}
 
 	@Override
@@ -133,7 +123,6 @@ public class Robot implements PlayCapable {
 	@Override
 	public void addCardToHand(Card card) {
 		hand.add(card);
-
 	}
 
 	@Override

@@ -20,13 +20,10 @@ public class Game {
 
 	public String parseKey() {
 		Scanner scanner = new Scanner(System.in);
-
 		List<String> robotAnswer = (List<String>) Arrays.asList("lobot", "robot", "borot", "ai", "bot");
 		List<String> exitAnswer = (List<String>) Arrays.asList("k", "exit", "q", "quit", "done");
-
 		String inputScan = scanner.next();
 		String input = inputScan.trim().toLowerCase();
-
 		if (robotAnswer.contains(input))
 			return "robot";
 		if (exitAnswer.contains(input))
@@ -65,15 +62,6 @@ public class Game {
 		}
 	}
 
-	public void fillChoiceMap() { // TODO rmovable
-
-		choiceMap.put(1, new speedComparator());
-		choiceMap.put(2, new maxHeightComparator());
-		choiceMap.put(3, new maxTakeoffWeightComparator());
-		choiceMap.put(4, new rangeComparator());
-
-	}
-
 	public void awardWinner(TreeMap<Card, PlayCapable> map) {
 		int count = 0;
 		PlayCapable winner = map.firstEntry().getValue();
@@ -97,31 +85,25 @@ public class Game {
 		}
 		Queue<Card> robotCards = new LinkedList<>();
 		robotCards.addAll(cards.keySet());
-
 		for (PlayCapable playCapable : players) {
 			if (playCapable instanceof Robot) {
 				((Robot) playCapable).setSeenCards(robotCards);
 			}
 		}
-
-		TreeMap<Card, PlayCapable> sorted = new TreeMap<Card, PlayCapable>(choiceMap.get(choice));
+		TreeMap<Card, PlayCapable> sorted = new TreeMap<>(choiceMap.get(choice));
 		sorted.putAll(cards);
 		PlayCapable winner = sorted.firstEntry().getValue();
 		printer.print("\nThe winner is: " + winner.getName());
-
 		awardWinner(sorted);
-		
 		for (PlayCapable player : players) {
 			printer.print(String.format("%s has %d card(s) left",player.getName(), player.cardsRemaining()));
 		}
-		
 		printer.print("-----------------------------------------------------------------");
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 		return winner;
 	}
 
