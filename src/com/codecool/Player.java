@@ -1,5 +1,6 @@
 package com.codecool;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -40,7 +41,12 @@ public class Player implements PlayCapable {
 
     @Override
     public Integer choose() {
-
+        try {
+            DisplayImage dsplyImage = new DisplayImage(hand.peek());
+            dsplyImage.start();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
         checkMyCard();
         boolean goodInput = false;
 

@@ -10,18 +10,32 @@ import javax.swing.JLabel;
 /**
  * Created by Lovi on 2017. 03. 02. @ 0:43.
  */
-public class DisplayImage {
-	public DisplayImage(Card c) throws IOException
+public class DisplayImage extends Thread{
+		Card cardGot;
+	public DisplayImage(Card c)  throws IOException
 	{
-		BufferedImage img=ImageIO.read(new File("src\\"+c.getID()));
+		cardGot = c;
+	}
+
+	@Override
+	public void run() {
+		try {
+			BufferedImage img=ImageIO.read(new File("src//"+cardGot.getID()));
 		ImageIcon icon=new ImageIcon(img);
+
 		JFrame frame=new JFrame();
+		JLabel lbl=new JLabel();
 		frame.setLayout(new FlowLayout());
 		frame.setSize(icon.getIconWidth(),icon.getIconHeight());
-		JLabel lbl=new JLabel();
 		lbl.setIcon(icon);
 		frame.add(lbl);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Thread.sleep(3000);
+		frame.setVisible(false);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 }
