@@ -92,12 +92,6 @@ public enum Card {
 
 	public String toString() {
 
-		try {
-			DisplayImage imageToDisplay = new DisplayImage(this);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-
 		return this.getName()  +
 				" :\t(1) Speed: " + this.getSpeed() +
 				" || (2) Maximum height: " + this.getMaxHeight() +
