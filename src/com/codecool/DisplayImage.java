@@ -19,9 +19,9 @@ public class DisplayImage extends Thread {
         cardGot = c;
     }
     public static BufferedImage resizeImage(BufferedImage originalImage, int type){
-        BufferedImage resizedImage = new BufferedImage(512, 256, type);
+        BufferedImage resizedImage = new BufferedImage(1024, 512, type);
         Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, 512, 256, null);
+        g.drawImage(originalImage, 0, 0, 1024, 512, null);
         g.dispose();
 
         return resizedImage;
@@ -36,13 +36,25 @@ public class DisplayImage extends Thread {
             ImageIcon icon = new ImageIcon(resizedImage);
             JFrame frame = new JFrame();
             JLabel lbl = new JLabel();
+            JLabel lbl2 = new JLabel();
+            JLabel lblSpeed = new JLabel("Speed: "+cardGot.getSpeed());
+            JLabel lblHeight = new JLabel("Max Height: "+cardGot.getMaxHeight());
+            JLabel lblWeight = new JLabel("Max Takeoff Weight: "+cardGot.getMaxTakeoffWeight());
+            JLabel lblRange = new JLabel("Range: "+cardGot.getRange());
             frame.setLayout(new FlowLayout());
-            frame.setSize(512,256);
+            frame.setSize(1024,600);
             lbl.setIcon(icon);
+            lbl2.setText("Attacker players card: "+cardGot.getName());
+            frame.add(lbl2);
             frame.add(lbl);
+            frame.add(lblSpeed);
+            frame.add(lblHeight);
+            frame.add(lblWeight);
+            frame.add(lblRange);
+
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            Thread.sleep(3000);
+            Thread.sleep(5000);
             frame.setVisible(false);
         } catch(Exception e) {
             e.printStackTrace();
