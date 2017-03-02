@@ -40,15 +40,14 @@ public class DisplayImage {
             BufferedImage resizedImage = resizeImage(originalImage,type);
 
             frame.setLayout(new FlowLayout());
-            frame.setSize(1200,640);
+            frame.setSize(600,350);
             ImageIcon icon = new ImageIcon(resizedImage);
             lbl.setIcon(icon);
             lbl2.setText("Players card: "+cardGot.getName());
-            lbl2.setVerticalAlignment(SwingConstants.TOP);
-            lblSpeed.setText(""+cardGot.getSpeed());
-            lblHeight.setText(""+cardGot.getMaxHeight());
-            lblWeight.setText(""+cardGot.getMaxTakeoffWeight());
-            lblRange.setText(""+cardGot.getRange());
+            lblSpeed.setText("Speed: "+cardGot.getSpeed()+"km/h | ");
+            lblHeight.setText("Max Height: "+cardGot.getMaxHeight()+" meters | ");
+            lblWeight.setText("Max Weight: "+cardGot.getMaxTakeoffWeight()+" kg |");
+            lblRange.setText("Range: "+cardGot.getRange()+" km");
             frame.add(lbl2);
             frame.add(lbl);
 
@@ -56,10 +55,6 @@ public class DisplayImage {
             frame.add(lblHeight);
             frame.add(lblWeight);
             frame.add(lblRange);
-            button1.setVerticalAlignment(SwingConstants.BOTTOM);
-            button2.setVerticalAlignment(SwingConstants.BOTTOM);
-            button3.setVerticalAlignment(SwingConstants.BOTTOM);
-            button4.setVerticalAlignment(SwingConstants.BOTTOM);
             frame.add(button1);
             frame.add(button2);
             frame.add(button3);
@@ -107,9 +102,9 @@ public class DisplayImage {
 
 
 	public static BufferedImage resizeImage(BufferedImage originalImage, int type){
-        BufferedImage resizedImage = new BufferedImage(1024, 512, type);
+        BufferedImage resizedImage = new BufferedImage(512, 256, type);
         Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, 1024, 512, null);
+        g.drawImage(originalImage, 0, 0, 512, 256, null);
         g.dispose();
 
         return resizedImage;
