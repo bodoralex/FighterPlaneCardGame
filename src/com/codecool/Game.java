@@ -2,6 +2,8 @@ package com.codecool;
 
 import java.util.*;
 
+import javafx.print.PageLayout;
+
 public class Game {
 
 	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
@@ -226,5 +228,25 @@ public class Game {
 	public List<PlayCapable> getPlayers() {
 		return players;
 	}
-
+	
+	public PlayCapable outOfTheGame(){
+		Iterator<PlayCapable> it = players.iterator();
+		while(it.hasNext()){
+			PlayCapable player = it.next();
+			if(player.cardsRemaining() == 0){
+				printer.print(player.getName() + " has zero cards left and is out of the game.");
+				it.remove();
+			}
+		}
+		if(players.size() == 1){
+			return players.get(0);
+		}
+		return null;
+	}
+	public void play(){
+		while(outOfTheGame() == null){
+			round();
+		}
+		printer.print("The game is ended. The winner is: " + outOfTheGame().getName());
+	}
 }

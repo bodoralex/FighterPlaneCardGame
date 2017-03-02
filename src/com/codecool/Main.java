@@ -17,9 +17,7 @@ public class Main {
 		game.gatherPlayers();
 		game.deal(deck);
 
-		game.round();
-		game.round();
-		game.round();
+		game.play();
 
 		/*
 		 *TODO befejezni a play()-t elfogyottEMárvalakinekAKártyája() metódussal
