@@ -2,8 +2,6 @@ package com.codecool;
 
 import java.util.*;
 
-import javafx.print.PageLayout;
-
 public class Game {
 
 	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
@@ -135,6 +133,10 @@ public class Game {
 		}
 
 		PlayCapable player = changingPlayerList.get(0);
+		if(player.cardsRemaining() == 0) {
+			changingPlayerList.remove(0);
+			player = changingPlayerList.get(0);
+		}
 		changingPlayerList.remove(0);
 		return player; // TODO return remove
 
