@@ -101,6 +101,9 @@ public class Robot implements PlayCapable {
 	public void setHand(OurQueue<Card> cards) {
 		this.hand = cards;
 	}
+	public Card peek() {
+		return hand.peek();
+	}
 
 	@Override
 	public int hashCode() {

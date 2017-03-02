@@ -1,22 +1,15 @@
 package com.codecool;
-
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
 
 public class Player implements PlayCapable {
 
-    Printer printer = new Printer();
-    OurQueue<Card> hand = new OurQueue<>();
-    String name;
-    public String toString(){
-    	return name;
-    }
+    private Printer printer = new Printer();
+    private OurQueue<Card> hand = new OurQueue<>();
+    private String name;
 
-    public Player(String name) {
-        this.name = name;
-    }
+	public Player(String name) {
+		this.name = name;
+	}
 
     @Override
     public String getName() {
@@ -26,12 +19,6 @@ public class Player implements PlayCapable {
     @Override
     public void addCardToHand(Card card) {
         hand.add(card);
-    }
-
-    public void checkMyCard() {
-        Card topCard = hand.peek();
-        printer.print(topCard);
-        printer.print("Choose the attribute you want to use");
     }
 
     @Override
@@ -59,10 +46,6 @@ public class Player implements PlayCapable {
         }	printer.print("Wrong number.");
         return 0;
     }
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Override
 	public int hashCode() {
@@ -96,6 +79,21 @@ public class Player implements PlayCapable {
 	@Override
 	public int cardsRemaining() {
 		return getHand().size();
+	}
+
+	@Override
+	public Card peek() {
+		return hand.peek();
+	}
+
+	public String toString(){
+		return name;
+	}
+
+	public void checkMyCard() {
+		Card topCard = hand.peek();
+		printer.print(topCard);
+		printer.print("Choose the attribute you want to use");
 	}
 
 }

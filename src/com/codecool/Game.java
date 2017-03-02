@@ -4,21 +4,19 @@ import java.util.*;
 
 public class Game {
 
-	public List<PlayCapable> players = new ArrayList<>(); // majd legyen
-															// private
+	private List<PlayCapable> players = new ArrayList<>();
 	private List<PlayCapable> changingPlayerList = new ArrayList<>();
-
+	private Printer printer;
+	private final String[] attrs = { "Max Speed", "Max Height", "Max Takeoff weigth", "Maximum range" };
 	private final Map<Integer, Comparator> choiceMap = new TreeMap<Integer, Comparator>() {
 		{
 			put(1, new speedComparator());
 			put(2, new maxHeightComparator());
 			put(3, new maxTakeoffWeightComparator());
 			put(4, new rangeComparator());
-		};
+		}
 
 	};
-
-	private Printer printer;
 
 	public String parseKey() {
 		Scanner scanner = new Scanner(System.in);
@@ -77,21 +75,24 @@ public class Game {
 	}
 
 	public void awardWinner(TreeMap<Card, PlayCapable> map) {
+		int count = 0;
 		PlayCapable winner = map.firstEntry().getValue();
 		for (Card card : map.keySet()) {
 			winner.addCardToHand(card);
+			count++;
 		}
+		printer.print("The winner got " + count + " cards");
 	}
 
 	public PlayCapable round() {
-
+		printer.print("-----------------------------------------------------------------");
 		Map<Card, PlayCapable> cards = new HashMap<>();
-
 		PlayCapable roundAttacker = roundAttacker();
-
+		printer.print(roundAttacker.getName() + " is attacking!\n");
 		int choice = roundAttacker.choose();
-
+		printer.print(String.format("%s' choosen arrtibute is: %s", roundAttacker.getName(), attrs[choice - 1]));
 		for (PlayCapable player : players) {
+			printer.print(player.getName() + "'s card: " + player.peek());
 			cards.put(player.draw(), player);
 		}
 		Queue<Card> robotCards = new LinkedList<>();
@@ -105,29 +106,40 @@ public class Game {
 
 		TreeMap<Card, PlayCapable> sorted = new TreeMap<Card, PlayCapable>(choiceMap.get(choice));
 		sorted.putAll(cards);
-		System.out.println(choice);
-		System.out.println(sorted);
-
 		PlayCapable winner = sorted.firstEntry().getValue();
-		System.out.println(winner);
+		printer.print("\nThe winner is: " + winner.getName());
 
 		awardWinner(sorted);
+		printer.print("-----------------------------------------------------------------");
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 		return winner;
 	}
 
-	public PlayCapable roundAttacker() { // legyenmáriterátor
+	public PlayCapable roundAttacker() {
+		while (true) {
+			try {
+				for (PlayCapable playCapable : players) {
+					if (!changingPlayerList.contains(playCapable)) {
+						changingPlayerList.add(playCapable);
+					}
+				}
+				for (PlayCapable playCapable : changingPlayerList) {
+					if (!players.contains(playCapable)) {
+						changingPlayerList.remove(playCapable);
+					}
+				}
+				PlayCapable player = changingPlayerList.get(0);
+				changingPlayerList.remove(0);
+				return player;
+			} catch (Exception e) {
 
-		if (changingPlayerList.size() == 0) {
-			for (PlayCapable playCapable : players) {
-				changingPlayerList.add(playCapable);
 			}
 		}
-
-		PlayCapable player = changingPlayerList.get(0);
-		changingPlayerList.remove(0);
-		return player; // TODO return remove
-
 	}
 
 	class speedComparator implements Comparator<Card> {
@@ -196,11 +208,17 @@ public class Game {
 
 	public void deal(Deck deck) {
 		printer.print("How many cards do you want to play with?");
+		printer.print("The maximum card number is: " + deck.deckSize());
 		Integer cardsNumber = new Integer(0);
 		while (cardsNumber.equals(0)) {
 			try {
 				String howMany = Main.scanner.next().trim();
 				cardsNumber = Integer.parseInt(howMany);
+				while (cardsNumber > 40 || cardsNumber < 1 || cardsNumber == -1 || cardsNumber < players.size()) {
+					printer.print("Wrong number input! Try again!");
+					howMany = Main.scanner.next().trim();
+					cardsNumber = Integer.parseInt(howMany);
+				}
 			} catch (Exception e) {
 				printer.print("That is not an integer.");
 			}
@@ -211,11 +229,31 @@ public class Game {
 
 	public void setPrinter(Printer printer) {
 		this.printer = printer;
-
 	}
 
 	public List<PlayCapable> getPlayers() {
 		return players;
 	}
 
+	public PlayCapable outOfTheGame() {
+		Iterator<PlayCapable> it = players.iterator();
+		while (it.hasNext()) {
+			PlayCapable player = it.next();
+			if (player.cardsRemaining() == 0) {
+				printer.print(player.getName() + " has zero cards left and is out of the game.");
+				it.remove();
+			}
+		}
+		if (players.size() == 1) {
+			return players.get(0);
+		}
+		return null;
+	}
+
+	public void play() {
+		while (outOfTheGame() == null) {
+			round();
+		}
+		printer.print("The game is ended. The winner is: " + outOfTheGame().getName());
+	}
 }

@@ -1,36 +1,32 @@
 package com.codecool;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
 	public static Scanner scanner = new Scanner(System.in);
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) {
 
 		Game game = new Game();
 		Deck deck = new Deck();
 		Printer printer = new Printer();
 		game.setPrinter(printer);
-
 		deck.fillDeck(Card.values());
 		deck.shuffleCards();
 		game.gatherPlayers();
 		game.deal(deck);
 
-		//game.round();
-		while(deck.getCards().size() > 0){
-		System.out.println(game.round());
-		}
+		game.play();
 
-		// System.out.println(game.round().getName());
-		// System.out.println(game.round().getName());
-		// System.out.println(game.round().getName());
-		//
-		//
-		//
-		// //game.play();
-		scanner.close();
+		/*
+		 *TODO befejezni a play()-t elfogyottEMárvalakinekAKártyája() metódussal
+		 *felugró képek
+		 *esetleg más cardokkal is kompatibilis legyen
+		 *hibakezelések
+		 *fun
+		 *amúgyszépmunka
+		 *todo-k megcsinálása 
+		 */
 	}
 }
