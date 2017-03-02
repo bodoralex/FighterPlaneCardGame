@@ -111,31 +111,35 @@ public class Game {
 
 		awardWinner(sorted);
 		printer.print("-----------------------------------------------------------------");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 		return winner;
 	}
 
 	public PlayCapable roundAttacker() {
+		while (true) {
+			try {
+				for (PlayCapable playCapable : players) {
+					if (!changingPlayerList.contains(playCapable)) {
+						changingPlayerList.add(playCapable);
+					}
+				}
+				for (PlayCapable playCapable : changingPlayerList) {
+					if (!players.contains(playCapable)) {
+						changingPlayerList.remove(playCapable);
+					}
+				}
+				PlayCapable player = changingPlayerList.get(0);
+				changingPlayerList.remove(0);
+				return player;
+			} catch (Exception e) {
 
-		if (changingPlayerList.size() == 0) {
-			for (PlayCapable playCapable : players) {
-				changingPlayerList.add(playCapable);
 			}
 		}
-
-		PlayCapable player = changingPlayerList.get(0);
-		if(player.cardsRemaining() == 0) {
-			changingPlayerList.remove(0);
-			player = changingPlayerList.get(0);
-		}
-		changingPlayerList.remove(0);
-		return player;
-
 	}
 
 	class speedComparator implements Comparator<Card> {
@@ -210,7 +214,7 @@ public class Game {
 			try {
 				String howMany = Main.scanner.next().trim();
 				cardsNumber = Integer.parseInt(howMany);
-				while(cardsNumber>40 || cardsNumber<1 || cardsNumber == -1 || cardsNumber< players.size()) {
+				while (cardsNumber > 40 || cardsNumber < 1 || cardsNumber == -1 || cardsNumber < players.size()) {
 					printer.print("Wrong number input! Try again!");
 					howMany = Main.scanner.next().trim();
 					cardsNumber = Integer.parseInt(howMany);
@@ -230,23 +234,24 @@ public class Game {
 	public List<PlayCapable> getPlayers() {
 		return players;
 	}
-	
-	public PlayCapable outOfTheGame(){
+
+	public PlayCapable outOfTheGame() {
 		Iterator<PlayCapable> it = players.iterator();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			PlayCapable player = it.next();
-			if(player.cardsRemaining() == 0){
+			if (player.cardsRemaining() == 0) {
 				printer.print(player.getName() + " has zero cards left and is out of the game.");
 				it.remove();
 			}
 		}
-		if(players.size() == 1){
+		if (players.size() == 1) {
 			return players.get(0);
 		}
 		return null;
 	}
-	public void play(){
-		while(outOfTheGame() == null){
+
+	public void play() {
+		while (outOfTheGame() == null) {
 			round();
 		}
 		printer.print("The game is ended. The winner is: " + outOfTheGame().getName());
