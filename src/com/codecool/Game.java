@@ -110,12 +110,17 @@ public class Game {
 		printer.print("\nThe winner is: " + winner.getName());
 
 		awardWinner(sorted);
+		
+		for (PlayCapable player : players) {
+			printer.print(String.format("%s has %d card(s) left",player.getName(), player.cardsRemaining()));
+		}
+		
 		printer.print("-----------------------------------------------------------------");
-//		try {
-//			Thread.sleep(2000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		return winner;
 	}
@@ -123,14 +128,14 @@ public class Game {
 	public PlayCapable roundAttacker() {
 		while (true) {
 			try {
-				for (PlayCapable playCapable : players) {
-					if (!changingPlayerList.contains(playCapable)) {
-						changingPlayerList.add(playCapable);
-					}
-				}
 				for (PlayCapable playCapable : changingPlayerList) {
 					if (!players.contains(playCapable)) {
 						changingPlayerList.remove(playCapable);
+					}
+				}
+				for (PlayCapable playCapable : players) {
+					if (!changingPlayerList.contains(playCapable)) {
+						changingPlayerList.add(playCapable);
 					}
 				}
 				PlayCapable player = changingPlayerList.get(0);

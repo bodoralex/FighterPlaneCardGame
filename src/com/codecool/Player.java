@@ -1,44 +1,53 @@
 package com.codecool;
 
+import java.io.IOException;
+
 public class Player implements PlayCapable {
 
-    private Printer printer = new Printer();
-    private OurQueue<Card> hand = new OurQueue<>();
-    private String name;
+	private Printer printer = new Printer();
+	private OurQueue<Card> hand = new OurQueue<>();
+	private String name;
 
 	public Player(String name) {
 		this.name = name;
 	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public void addCardToHand(Card card) {
-        hand.add(card);
-    }
+	@Override
+	public void addCardToHand(Card card) {
+		hand.add(card);
+	}
 
-    @Override
-    public Card draw() {
-        return hand.remove();
-    }
+	@Override
+	public Card draw() {
+		return hand.remove();
+	}
 
-    @Override
-    public Integer choose() {
-        checkMyCard();
-        boolean goodInput = false;
+	@Override
+	public Integer choose() {
+		try {
+			DisplayImage dsplyImage = new DisplayImage(hand.peek());
+			dsplyImage.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		checkMyCard();
+		boolean goodInput = false;
 
-        while (!goodInput) {
-        	String input = Main.scanner.next().trim();
-            Integer playerChoice = Integer.parseInt(input);
-            if (playerChoice == 1 || playerChoice == 2 || playerChoice == 3 || playerChoice == 4) {
-                return playerChoice;
-            }
-        }	printer.print("Wrong number.");
-        return 0;
-    }
+		while (!goodInput) {
+			String input = Main.scanner.next().trim();
+			Integer playerChoice = Integer.parseInt(input);
+			if (playerChoice == 1 || playerChoice == 2 || playerChoice == 3 || playerChoice == 4) {
+				return playerChoice;
+			}
+		}
+		printer.print("Wrong number.");
+		return 0;
+	}
 
 	@Override
 	public int hashCode() {
@@ -80,7 +89,7 @@ public class Player implements PlayCapable {
 		return hand.peek();
 	}
 
-	public String toString(){
+	public String toString() {
 		return name;
 	}
 
