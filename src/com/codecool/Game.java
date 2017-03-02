@@ -260,5 +260,6 @@ public class Game {
 			round();
 		}
 		printer.print("The game is ended. The winner is: " + outOfTheGame().getName());
+		System.exit(0);
 	}
 }
