@@ -16,6 +16,10 @@ import javax.swing.*;
 public class DisplayImage {
             JFrame frame = new JFrame();
             JLabel lbl = new JLabel();
+            JLabel lblSpeed = new JLabel();
+            JLabel lblHeight = new JLabel();
+            JLabel lblWeight = new JLabel();
+            JLabel lblRange = new JLabel();
             JLabel lbl2 = new JLabel("Your plane: ");
             JButton button1 = new JButton("Speed");
             JButton button2 = new JButton("Height");
@@ -36,26 +40,38 @@ public class DisplayImage {
             BufferedImage resizedImage = resizeImage(originalImage,type);
 
             frame.setLayout(new FlowLayout());
-            frame.setSize(600,320);
+            frame.setSize(1200,640);
             ImageIcon icon = new ImageIcon(resizedImage);
             lbl.setIcon(icon);
-            lbl2.setText(cardGot.name());
+            lbl2.setText("Players card: "+cardGot.getName());
+            lbl2.setVerticalAlignment(SwingConstants.TOP);
+            lblSpeed.setText(""+cardGot.getSpeed());
+            lblHeight.setText(""+cardGot.getMaxHeight());
+            lblWeight.setText(""+cardGot.getMaxTakeoffWeight());
+            lblRange.setText(""+cardGot.getRange());
             frame.add(lbl2);
             frame.add(lbl);
+
+            frame.add(lblSpeed);
+            frame.add(lblHeight);
+            frame.add(lblWeight);
+            frame.add(lblRange);
+            button1.setVerticalAlignment(SwingConstants.BOTTOM);
+            button2.setVerticalAlignment(SwingConstants.BOTTOM);
+            button3.setVerticalAlignment(SwingConstants.BOTTOM);
+            button4.setVerticalAlignment(SwingConstants.BOTTOM);
             frame.add(button1);
             frame.add(button2);
             frame.add(button3);
             frame.add(button4);
-            //button1.addActionListener(new SpeedActionListener());
             frame.setVisible(true);
-            
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
             button1.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
     				numToReturn = 1;
     	            frame.setVisible(false);
-    	            frame.dispose();
-    	            frame.setDefaultCloseOperation(0);
-    	            
+
     			}
     		});
             
@@ -63,31 +79,24 @@ public class DisplayImage {
     			public void actionPerformed(ActionEvent e) {
     				numToReturn = 2;
     	            frame.setVisible(false);
-    	            frame.dispose();
-    	            frame.setDefaultCloseOperation(0);
-    	            
+
     			}
     		});
             button3.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
     				numToReturn = 3;
     	            frame.setVisible(false);
-    	            frame.dispose();
-    	            frame.setDefaultCloseOperation(0);
-    	            
+
     			}
     		});
             button4.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
     				numToReturn = 4;
     	            frame.setVisible(false);
-    	            frame.dispose();
-    	            frame.setDefaultCloseOperation(0);
-    	            
+
     			}
     		});
             
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     public Integer getNumToReturn() {
@@ -98,9 +107,9 @@ public class DisplayImage {
 
 
 	public static BufferedImage resizeImage(BufferedImage originalImage, int type){
-        BufferedImage resizedImage = new BufferedImage(512, 256, type);
+        BufferedImage resizedImage = new BufferedImage(1024, 512, type);
         Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, 512, 256, null);
+        g.drawImage(originalImage, 0, 0, 1024, 512, null);
         g.dispose();
 
         return resizedImage;
