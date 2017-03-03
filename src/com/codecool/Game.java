@@ -103,7 +103,6 @@ public class Game {
 				((Robot) playCapable).setSeenCards(robotCards);
 			}
 		}
-
 		TreeMap<Card, PlayCapable> sorted = new TreeMap<Card, PlayCapable>(choiceMap.get(choice));
 		sorted.putAll(cards);
 		PlayCapable winner = sorted.firstEntry().getValue();
@@ -116,12 +115,6 @@ public class Game {
 		}
 		
 		printer.print("-----------------------------------------------------------------");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return winner;
 	}
 
@@ -258,6 +251,11 @@ public class Game {
 	public void play() {
 		while (outOfTheGame() == null) {
 			round();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		printer.print("The game is ended. The winner is: " + outOfTheGame().getName());
 		System.exit(0);
