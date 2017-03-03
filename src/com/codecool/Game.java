@@ -107,7 +107,7 @@ public class Game {
 		TreeMap<Card, PlayCapable> sorted = new TreeMap<Card, PlayCapable>(choiceMap.get(choice));
 		sorted.putAll(cards);
 		PlayCapable winner = sorted.firstEntry().getValue();
-		printer.print("\nThe winner is: " + winner.getName());
+		printer.print("\nThe winner is: " + winner.getName() + "\n");
 
 		awardWinner(sorted);
 		

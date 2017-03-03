@@ -40,7 +40,7 @@ public class DisplayImage {
             BufferedImage resizedImage = resizeImage(originalImage,type);
             frame.setLayout(new FlowLayout());
             frame.setResizable(false);
-            frame.setSize(550,375);
+            frame.setSize(610,335);
             frame.setAlwaysOnTop(true);
             frame.setLocationRelativeTo(null);
             ImageIcon icon = new ImageIcon(resizedImage);
