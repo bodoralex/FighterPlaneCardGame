@@ -73,8 +73,8 @@ public class DisplayLastWinner extends JFrame {
         lbl2.setAlignmentX(LEFT_ALIGNMENT);
         topLabel = new JPanel();
         topLabel.setLayout(new BoxLayout(topLabel,BoxLayout.LINE_AXIS));
-        topLabel.add(lbl2);
         topLabel.add(lbl3);
+        topLabel.add(lbl2);
         labelPanel = new JPanel();
         labelPanel.setLayout(new BoxLayout(labelPanel,BoxLayout.LINE_AXIS));
         labelPanel.add(lblSpeed);

@@ -37,7 +37,21 @@ public class StartGUI extends JFrame {
                 setIpToConnect(ipArea.getText());
                 setupConnection();
                 setupStreams();
-                sendName();
+                while(true){
+                    try {
+                            Thread.sleep(250);
+                        if(((String)input.readObject()).equals("SEND")) {
+                            sendName();
+                            break;
+                        }
+                    } catch(IOException e1) {
+                        e1.printStackTrace();
+                    } catch(ClassNotFoundException e1) {
+                        e1.printStackTrace();
+                    } catch(InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 setVisible(false);
                 startRunning();
             }
@@ -104,14 +118,16 @@ public class StartGUI extends JFrame {
         try {
             int counter = 0;
             output.writeObject(actualUserName);
+
             if(input.readObject().equals("Name already taken")) {
                 counter++;
                 output.writeObject(actualUserName + "(" + counter + ")");
             }
         } catch(IOException e) {
             e.printStackTrace();
-        } catch(ClassNotFoundException e) {
+        }catch(ClassNotFoundException e) {
             e.printStackTrace();
+
         }
     }
 
