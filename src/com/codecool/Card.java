@@ -1,7 +1,5 @@
 package com.codecool;
 
-import java.io.IOException;
-
 /**
  * Created by pata on 2017.02.27..
  */
@@ -56,14 +54,12 @@ public enum Card {
 	private final String pictureID;
 
 	Card(String name, int speed, int maxHeight, int maxTakeoffWeight, int range, String pictureID) {
-
 		this.name = name;
 		this.speed = speed;
 		this.maxHeight = maxHeight;
 		this.maxTakeoffWeight = maxTakeoffWeight;
 		this.range = range;
 		this.pictureID = pictureID;
-
 	}
 
 	public String getName() {
@@ -91,7 +87,6 @@ public enum Card {
 	}
 
 	public String toString() {
-
 		return this.getName()  +
 				" :\t(1) Speed: " + this.getSpeed() +
 				" || (2) Maximum height: " + this.getMaxHeight() +
