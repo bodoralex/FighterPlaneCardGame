@@ -1,4 +1,7 @@
-package com.codecool;
+package com.codecool.client;
+
+import com.codecool.Card;
+import com.codecool.Deck;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,9 +34,16 @@ public class DisplayImage extends JFrame{
     private Container contentPane;
     private Integer numToReturn;
     private Card cardGot;
+    private Deck toSearch;
 
-    public DisplayImage(Card c) throws IOException {
-        cardGot = c;
+    public DisplayImage(String c) throws IOException {
+        toSearch = new Deck();
+        toSearch.fillDeck(Card.values());
+        for(Card d : Card.values()){
+            if(d.getID() == c){
+                cardGot = d;
+            }
+        }
 
         BufferedImage originalImage = null;
         try {
