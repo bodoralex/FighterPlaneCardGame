@@ -36,13 +36,13 @@ public enum Card {
 	MORANE("Morane Saulnier 406", 486, 10025, 2500, 1015, "MORANE.jpg"),
 	DEWOITINE("Dewoitine DW520", 560, 10050, 2785, 1250, "DEWOITINE.jpg"),
 	BLOCH("Bloch MB170", 530, 11000, 7175, 1650, "BLOCH.jpg"),
-	LIORÉ("Lioré-et-Olivier LeO 45", 495, 9000, 11398, 2900, "LIORÉ.jpg"),
+	LIORE("Liore-et-Olivier LeO 45", 495, 9000, 11398, 2900, "LIORE.jpg"),
 	VALTION("VL Myrsky", 535, 9500, 3213, 500, "VALTION.jpg"),
 	BUFFALO("Brewster Buffalo", 517, 10100, 3247, 670, "BUFFALO.jpg"),
 	CURTISHAWK("P–36 Hawk", 500, 9967, 2732, 860, "CURTISHAWK.jpg"),
 	FOKKER("Fokker D.XXI", 460, 11350, 2000, 930, "FOKKER.jpg"),
 	HEINKEL("Heinkel HE-122A0", 488, 8000, 2000, 600, "HEINKEL.jpg"),
-	MAVAG("Mávag Héja", 530, 10500, 3240, 580, "MAVAG.jpg"),
+	MAVAG("Mavag Heja", 530, 10500, 3240, 580, "MAVAG.jpg"),
 	JUNKERS88("Junkers JU-88", 510, 9000, 14000, 2430, "JUNKERS88.jpg"),
 	JUNKERS52("Junkers JU-52", 195, 3400, 7000, 1010, "JUNKERS52.jpg");
 

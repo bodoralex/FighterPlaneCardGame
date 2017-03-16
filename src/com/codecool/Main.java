@@ -19,14 +19,6 @@ public class Main {
 
 		game.play();
 
-		/*
-		 *TODO befejezni a play()-t elfogyottEMárvalakinekAKártyája() metódussal
-		 *felugró képek
-		 *esetleg más cardokkal is kompatibilis legyen
-		 *hibakezelések
-		 *fun
-		 *amúgyszépmunka
-		 *todo-k megcsinálása 
-		 */
+
 	}
 }
