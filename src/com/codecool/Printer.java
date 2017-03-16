@@ -8,4 +8,7 @@ public class Printer {
     public void print(Object object) {
         System.out.println(object);
     }
+    public void printError(Object object){
+    	System.err.println(object);
+    }
 }

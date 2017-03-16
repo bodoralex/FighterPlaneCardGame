@@ -3,7 +3,7 @@ package com.codecool;
 import java.util.*;
 
 public class Game {
-
+	private Server server;
 	private List<PlayCapable> players = new ArrayList<>();
 	private List<PlayCapable> changingPlayerList = new ArrayList<>();
 	private Printer printer;
@@ -33,36 +33,53 @@ public class Game {
 			return "exit";
 		return input;
 	}
+	
+	public void setUpServer(){
+		printer.print("How many players will be? (minimum 2)");
+		int playersNumber =  Main.scanner.nextInt();
+		
+		server = new Server(playersNumber, 6969);
+		server.createServerSocket();
+		
+		
+	}
 
-	public void gatherPlayers() {
-		printer.print("Let's set up the players!");
-		printer.print(String.format(
-				"Please enter the name of the %s. player. " + "Or enter Robot, if you would like to add a robot :).",
-				players.size()));
-		printer.print("Enter 'done' if you wouldn't like to add nem player");
-		boolean gathering = true;
-		while (gathering) {
-			String input = parseKey();
-			if (input.equals("exit")) {
-				gathering = false;
-			} else if (input.equals("robot")) {
-				PlayCapable robot = new Robot();
-				players.add(robot);
-				printer.print(String.format("%s added", robot.getName()));
-			} else {
-				PlayCapable player = new Player(input);
-				if (players.contains(player)) {
-					try {
-						throw new NameTakenException();
-					} catch (NameTakenException error) {
-						printer.print(error.errorMessage());
-					}
-				} else {
-					printer.print(String.format("%s added", player.getName()));
-				}
-				players.add(player);
-			}
-		}
+	public void setPlayers() {
+		
+		ArrayList<Player> namelessPlayers = server.gatherPlayers();
+		ArrayList<Player> players = server.setNames(namelessPlayers);
+		
+		
+		//this.players = players;
+//		
+//		printer.print("Let's set up the players!");
+//		printer.print(String.format(
+//				"Please enter the name of the %s. player. " + "Or enter Robot, if you would like to add a robot :).",
+//				players.size()));
+//		printer.print("Enter 'done' if you wouldn't like to add nem player");
+//		boolean gathering = true;
+//		while (gathering) {
+//			String input = parseKey();
+//			if (input.equals("exit")) {
+//				gathering = false;
+//			} else if (input.equals("robot")) {
+//				PlayCapable robot = new Robot();
+//				players.add(robot);
+//				printer.print(String.format("%s added", robot.getName()));
+//			} else {
+//				PlayCapable player = new Player(input);
+//				if (players.contains(player)) {
+//					try {
+//						throw new NameTakenException();
+//					} catch (NameTakenException error) {
+//						printer.print(error.errorMessage());
+//					}
+//				} else {
+//					printer.print(String.format("%s added", player.getName()));
+//				}
+//				players.add(player);
+//			}
+//		}
 	}
 
 	public void fillChoiceMap() { // TODO rmovable

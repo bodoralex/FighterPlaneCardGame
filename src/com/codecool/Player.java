@@ -1,22 +1,44 @@
 package com.codecool;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Player implements PlayCapable {
 
 	private Printer printer = new Printer();
 	private OurQueue<Card> hand = new OurQueue<>();
 	private String name;
+	private ObjectOutputStream outputStream;
+	private ObjectInputStream inputStream;
 
 	public Player(String name) {
 		this.name = name;
 	}
+	public Player(){}
 
 	@Override
 	public String getName() {
 		return name;
 	}
+	
+	
 
+	public void setName(String name) {
+		this.name = name;
+	}
+	public ObjectOutputStream getOutputStream() {
+		return outputStream;
+	}
+	public void setOutputStream(ObjectOutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
+	public ObjectInputStream getInputStream() {
+		return inputStream;
+	}
+	public void setInputStream(ObjectInputStream inputStream) {
+		this.inputStream = inputStream;
+	}
 	@Override
 	public void addCardToHand(Card card) {
 		hand.add(card);
