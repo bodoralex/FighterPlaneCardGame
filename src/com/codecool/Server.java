@@ -11,14 +11,16 @@ import java.util.ArrayList;
 
 public class Server {
 
-	protected final int maxPlayersNumber;
+	protected final int playersNumber;
 	protected final int portNumber;
 	protected final Printer printer = new Printer();
 	protected ServerSocket serverSocket;
+	protected final int robotsNumber;
 
-	public Server(int maxPlayers, int portNumber) {
-		this.maxPlayersNumber = maxPlayers;
+	public Server(int players,int robotsNumber, int portNumber) {
+		this.playersNumber = players;
 		this.portNumber = portNumber;
+		this.robotsNumber = robotsNumber;
 
 	}
 
@@ -31,11 +33,22 @@ public class Server {
 		}
 	}
 
+	
+	
+	
+	public int getPlayersNumber() {
+		return playersNumber;
+	}
+
+	public int getRobotsNumber() {
+		return robotsNumber;
+	}
+
 	public ArrayList<Player> gatherPlayers() {
 
 		ArrayList<Player> players = new ArrayList<Player>();
 
-		for (int i = 0; i < maxPlayersNumber; i++) {
+		for (int i = 0; i < playersNumber; i++) {
 			try {
 				Socket socket = serverSocket.accept();
 				Player player = new Player();
@@ -70,16 +83,12 @@ public class Server {
 		while (!everybodyHasName(players)) {
 			for (Player player : players) {
 				try {
-					boolean availableName = true;
 					String name = (String) player.getInputStream().readObject();
-					for (Player player2 : players) {
-						if (player.getName().equals(player2.getName())) {
-							player.getOutputStream().writeObject("Name is already taken");
-							availableName = false;
-						}
-					}
-					if (availableName)
+					// TODO veszélyforrás
+					// mivanhanemírbesemmi
+					if (isANewName(players, name)) {
 						player.setName(name);
+					}
 				} catch (ClassNotFoundException e) {
 					printer.printError(e.getStackTrace());
 				} catch (IOException e) {
@@ -87,10 +96,19 @@ public class Server {
 					printer.printError(e.getStackTrace());
 				}
 			}
-
 		}
-
 		return players;
+	}
+
+	private boolean isANewName(ArrayList<Player> players, String name) throws IOException {
+		if(name.length() < 4 || name == null) return false;
+		for (Player player : players) {
+			if (name.equals(player.getName())) {
+				player.getOutputStream().writeObject("Name is already taken");
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void nameRequest(ArrayList<Player> players) {

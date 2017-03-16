@@ -9,24 +9,23 @@ public class Main {
 	public static void main(String[] args) {
 
 		Game game = new Game();
-		Deck deck = new Deck();
 		Printer printer = new Printer();
 		game.setPrinter(printer);
-		deck.fillDeck(Card.values());
-		deck.shuffleCards();
-		game.gatherPlayers();
-		game.deal(deck);
-
-		game.play();
+		game.setUpServer();
+		game.setPlayers();
+		
+		// Deck deck = new Deck();
+		// deck.fillDeck(Card.values());
+		// deck.shuffleCards();
+		// game.setPlayers();
+		// game.deal(deck);
+		//
+		// game.play();
 
 		/*
-		 *TODO befejezni a play()-t elfogyottEMárvalakinekAKártyája() metódussal
-		 *felugró képek
-		 *esetleg más cardokkal is kompatibilis legyen
-		 *hibakezelések
-		 *fun
-		 *amúgyszépmunka
-		 *todo-k megcsinálása 
+		 * TODO befejezni a play()-t elfogyottEMárvalakinekAKártyája()
+		 * metódussal felugró képek esetleg más cardokkal is kompatibilis legyen
+		 * hibakezelések fun amúgyszépmunka todo-k megcsinálása
 		 */
 	}
 }

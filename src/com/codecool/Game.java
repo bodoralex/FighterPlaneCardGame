@@ -33,53 +33,63 @@ public class Game {
 			return "exit";
 		return input;
 	}
-	
-	public void setUpServer(){
-		printer.print("How many players will be? (minimum 2)");
-		int playersNumber =  Main.scanner.nextInt();
+
+	public void setUpServer() {
 		
-		server = new Server(playersNumber, 6969);
+		ServerGUI serverGUI = new ServerGUI();
+		serverGUI.sleepServer();
+		
+		int playersNumber = serverGUI.getPlayerNumber();
+		int robotsNumber = serverGUI.getRobotNumber();
+		
+
+		server = new Server(playersNumber, robotsNumber, 6969);
 		server.createServerSocket();
-		
-		
+
 	}
 
 	public void setPlayers() {
-		
+
 		ArrayList<Player> namelessPlayers = server.gatherPlayers();
 		ArrayList<Player> players = server.setNames(namelessPlayers);
-		
-		
-		//this.players = players;
+		this.players = new ArrayList<PlayCapable>();
+		this.players.addAll(players);
+		for (int i = 0; i < server.getRobotsNumber(); i++) {
+			Robot robot = new Robot();
+			this.players.add(robot);
+		}
+
+//		 this.players = players;
 //		
-//		printer.print("Let's set up the players!");
-//		printer.print(String.format(
-//				"Please enter the name of the %s. player. " + "Or enter Robot, if you would like to add a robot :).",
-//				players.size()));
-//		printer.print("Enter 'done' if you wouldn't like to add nem player");
-//		boolean gathering = true;
-//		while (gathering) {
-//			String input = parseKey();
-//			if (input.equals("exit")) {
-//				gathering = false;
-//			} else if (input.equals("robot")) {
-//				PlayCapable robot = new Robot();
-//				players.add(robot);
-//				printer.print(String.format("%s added", robot.getName()));
-//			} else {
-//				PlayCapable player = new Player(input);
-//				if (players.contains(player)) {
-//					try {
-//						throw new NameTakenException();
-//					} catch (NameTakenException error) {
-//						printer.print(error.errorMessage());
-//					}
-//				} else {
-//					printer.print(String.format("%s added", player.getName()));
-//				}
-//				players.add(player);
-//			}
-//		}
+//		 printer.print("Let's set up the players!");
+//		 printer.print(String.format(
+//		 "Please enter the name of the %s. player. " + "Or enter Robot, if you
+//		 would like to add a robot :).",
+//		 players.size()));
+//		 printer.print("Enter 'done' if you wouldn't like to add nem player");
+//		 boolean gathering = true;
+//		 while (gathering) {
+//		 String input = parseKey();
+//		 if (input.equals("exit")) {
+//		 gathering = false;
+//		 } else if (input.equals("robot")) {
+//		 PlayCapable robot = new Robot();
+//		 players.add(robot);
+//		 printer.print(String.format("%s added", robot.getName()));
+//		 } else {
+//		 PlayCapable player = new Player(input);
+//		 if (players.contains(player)) {
+//		 try {
+//		 throw new NameTakenException();
+//		 } catch (NameTakenException error) {
+//		 printer.print(error.errorMessage());
+//		 }
+//		 } else {
+//		 printer.print(String.format("%s added", player.getName()));
+//		 }
+//		 players.add(player);
+//		 }
+//		 }
 	}
 
 	public void fillChoiceMap() { // TODO rmovable
@@ -126,11 +136,11 @@ public class Game {
 		printer.print("\nThe winner is: " + winner.getName() + "\n");
 
 		awardWinner(sorted);
-		
+
 		for (PlayCapable player : players) {
-			printer.print(String.format("%s has %d card(s) left",player.getName(), player.cardsRemaining()));
+			printer.print(String.format("%s has %d card(s) left", player.getName(), player.cardsRemaining()));
 		}
-		
+
 		printer.print("-----------------------------------------------------------------");
 		return winner;
 	}
