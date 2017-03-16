@@ -16,6 +16,7 @@ public class Server {
 	protected final Printer printer = new Printer();
 	protected ServerSocket serverSocket;
 	protected final int robotsNumber;
+	protected ServerGUI serverGUI;
 
 	public Server(int players, int robotsNumber, int portNumber) {
 		this.playersNumber = players;
@@ -28,9 +29,19 @@ public class Server {
 		try {
 			this.serverSocket = new ServerSocket(portNumber);
 		} catch (IOException e) {
-			printer.printError("The port is busy");
-			printer.printError(e.getStackTrace());
+			serverGUI.printToTextArea("3");
+			serverGUI.printToTextArea(e.getStackTrace());
 		}
+	}
+	
+	
+
+	public void setServerGUI(ServerGUI serverGUI) {
+		this.serverGUI = serverGUI;
+	}
+
+	public ServerGUI getServerGUI() {
+		return serverGUI;
 	}
 
 	public int getPlayersNumber() {
@@ -57,12 +68,11 @@ public class Server {
 				players.add(player);
 
 			} catch (IOException e) {
-				printer.printError("The port is busy");
-				printer.printError(e.getStackTrace());
+				serverGUI.printToTextArea("4");
+				serverGUI.printToTextArea(e.getStackTrace());
 			}
-
 		}
-		printer.print("Players connected");
+		serverGUI.printToTextArea("Players connected");
 		return players;
 	}
 
@@ -88,10 +98,10 @@ public class Server {
 						player.setName(name);
 					}
 				} catch (ClassNotFoundException e) {
-					printer.printError(e.getStackTrace());
+					serverGUI.printToTextArea(e.getStackTrace());
 				} catch (IOException e) {
-					printer.printError("The port is busy");
-					printer.printError(e.getStackTrace());
+					serverGUI.printToTextArea("5");
+					serverGUI.printToTextArea(e.getStackTrace());
 				}
 			}
 		}
@@ -115,8 +125,8 @@ public class Server {
 			try {
 				player.getOutputStream().writeObject("Please enter your name");
 			} catch (IOException e) {
-				printer.printError("The port is busy");
-				printer.printError(e.getStackTrace());
+				serverGUI.printToTextArea("0");
+				serverGUI.printToTextArea(e.getStackTrace());
 			}
 		}
 	}
@@ -126,8 +136,8 @@ public class Server {
 		try {
 			outStream.writeObject(object);
 		} catch (IOException e) {
-			printer.printError("The port is busy");
-			printer.printError(e.getStackTrace());
+			serverGUI.printToTextArea("1");
+			serverGUI.printToTextArea(e.getStackTrace());
 		}
 
 	}
@@ -138,8 +148,8 @@ public class Server {
 			object = inputStream.readObject();
 		} catch (ClassNotFoundException e) {
 		} catch (IOException e) {
-			printer.printError("The port is busy");
-			printer.printError(e.getStackTrace());
+			serverGUI.printToTextArea("2");
+			serverGUI.printToTextArea(e.getStackTrace());
 		}
 		return object;
 	}

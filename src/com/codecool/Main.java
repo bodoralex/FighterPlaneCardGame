@@ -13,14 +13,14 @@ public class Main {
 		game.setPrinter(printer);
 		game.setUpServer();
 		game.setPlayers();
+
+		Deck deck = new Deck();
+		deck.fillDeck(Card.values());
+		deck.shuffleCards();
 		
-		// Deck deck = new Deck();
-		// deck.fillDeck(Card.values());
-		// deck.shuffleCards();
-		// game.setPlayers();
-		// game.deal(deck);
-		//
-		// game.play();
+		game.deal(deck);
+	
+		game.play();
 
 		/*
 		 * TODO befejezni a play()-t elfogyottEMárvalakinekAKártyája()
