@@ -11,11 +11,12 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by lovi on 2017.03.16..
  */
-public class DisplayLastWinner extends JFrame {
+public class DisplayLastRound extends JFrame {
     private JLabel lbl;
     private JLabel lblSpeed;
     private JLabel lblHeight;
@@ -27,20 +28,38 @@ public class DisplayLastWinner extends JFrame {
     private JPanel topLabel;
     private JPanel picturePanel;
     private JPanel labelPanel;
-    private JPanel buttonPanel;
     private Container contentPane;
     private Card cardGot;
-    private Deck toSearch;
+    private String winnerCard;
 
-    public DisplayLastWinner(String c,String winnerName) throws IOException {
-        toSearch = new Deck();
-        toSearch.fillDeck(Card.values());
-        for(Card d : Card.values()){
-            if(d.getID() == c){
-                cardGot = d;
+    public DisplayLastRound(ArrayList serverData) throws IOException {
+        String playerName;
+        setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
+        for(Object a : serverData) { //nagy arraylist
+            playerName = (String) ((ArrayList) a).get(1);
+            for(Card d : Card.values()) {
+                if(d.getID().equals((String)((ArrayList) a).get(0))) {
+                    cardGot = d;
+                }
+                if(((ArrayList) a).get(2).equals("TRUE")){
+                    winnerCard = d.getID();
+                }
             }
-        }
+            buildGuiElements(cardGot,playerName);
 
+            }
+            button1 = new JButton("Close");
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        });
+            add(button1);
+            endSession();
+
+
+        }
+    public void buildGuiElements(Card cardGot, String playerName){
         BufferedImage originalImage = null;
         try {
             originalImage = ImageIO.read(new File("src//" + cardGot.getID()));
@@ -57,8 +76,12 @@ public class DisplayLastWinner extends JFrame {
         lbl.setHorizontalAlignment(SwingConstants.LEFT);
         lbl2 = new JLabel();
         lbl3 = new JLabel();
-        lbl3.setText("Last turns winner: "+winnerName);
-        lbl2.setText("Last turns winner card: " + cardGot.getName());
+        lbl3.setText("" + playerName);
+        if(cardGot.getID().equals(winnerCard)) {
+            lbl2.setText("!!!WINNER!!! " + cardGot.getName());
+        }else{
+            lbl2.setText("" + cardGot.getName());
+        }
         lblSpeed = new JLabel();
         lblSpeed.setText("Speed: " + cardGot.getSpeed() + "km/h | ");
         lblHeight = new JLabel();
@@ -68,49 +91,37 @@ public class DisplayLastWinner extends JFrame {
         lblRange = new JLabel();
         lblRange.setText("Range: " + cardGot.getRange() + " km");
         picturePanel = new JPanel();
-        picturePanel.setLayout(new BoxLayout(picturePanel,BoxLayout.LINE_AXIS));
+        picturePanel.setLayout(new BoxLayout(picturePanel, BoxLayout.LINE_AXIS));
         picturePanel.add(lbl);
         lbl2.setAlignmentX(LEFT_ALIGNMENT);
         topLabel = new JPanel();
-        topLabel.setLayout(new BoxLayout(topLabel,BoxLayout.LINE_AXIS));
+        topLabel.setLayout(new BoxLayout(topLabel, BoxLayout.LINE_AXIS));
         topLabel.add(lbl3);
         topLabel.add(lbl2);
         labelPanel = new JPanel();
-        labelPanel.setLayout(new BoxLayout(labelPanel,BoxLayout.LINE_AXIS));
+        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.LINE_AXIS));
         labelPanel.add(lblSpeed);
         labelPanel.add(lblHeight);
         labelPanel.add(lblWeight);
         labelPanel.add(lblRange);
-        buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.LINE_AXIS));
-        button1 = new JButton("Close");
-        buttonPanel.add(button1);
         contentPane = new Container();
-        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(topLabel);
         contentPane.add(picturePanel);
         contentPane.add(labelPanel);
-        contentPane.add(buttonPanel);
         add(contentPane);
         setSize(650, 350);
-        setMinimumSize(new Dimension(600,320));
+        setMinimumSize(new Dimension(600, 320));
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+    }
+    public void endSession(){
         try {
             Thread.sleep(5000);
             setVisible(false);
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
-        button1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
-
-
     }
-
-
-
 }
