@@ -17,9 +17,10 @@ public class Main {
 		Deck deck = new Deck();
 		deck.fillDeck(Card.values());
 		deck.shuffleCards();
-		
+		System.out.println("deck.shuffleCards()");
+
 		game.deal(deck);
-	
+		System.out.println("playelőttvagyok");
 		game.play();
 
 		/*

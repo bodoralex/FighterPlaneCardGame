@@ -94,6 +94,7 @@ public class Server {
 					String name = (String) player.getInputStream().readObject();
 					// TODO veszélyforrás
 					// mivanhanemírbesemmi
+					if(name == null) continue;
 					if (isANewName(players, name)) {
 						player.setName(name);
 					}
@@ -109,7 +110,7 @@ public class Server {
 	}
 
 	private boolean isANewName(ArrayList<Player> players, String name) throws IOException {
-		if (name.length() < 4 || name == null)
+		if (name.length() < 4)
 			return false;
 		for (Player player : players) {
 			if (name.equals(player.getName())) {
