@@ -1,6 +1,8 @@
 package com.codecool;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +34,9 @@ public class ServerGUI extends JFrame {
     JLabel sockets;
     JTextArea socketConnections;
     JScrollPane scrollPane;
+    JSlider slider;
+    JLabel cardNumber;
+    int cardNum;
 
     public ServerGUI() {
 
@@ -42,7 +47,7 @@ public class ServerGUI extends JFrame {
         header = new JLabel("Fighter Plane Card Game");
         headerPanel.add(header);
 
-        panel.setLayout(new GridLayout(4,4));
+        panel.setLayout(new GridLayout(5,5));
         panel.setVisible(false);
 
         serverMenuBar = new JMenuBar();
@@ -78,6 +83,16 @@ public class ServerGUI extends JFrame {
 
         robotTextField = new JTextField(20);
         panel.add(robotTextField);
+
+        cardNumber = new JLabel("How many Card:");
+        panel.add(cardNumber);
+
+        slider = new JSlider(JSlider.HORIZONTAL,0,40,0);
+        slider.setMajorTickSpacing(5);
+        slider.setPaintTicks(true);
+        SetCardEvent setCardEvent = new SetCardEvent();
+        slider.addChangeListener(setCardEvent);
+        panel.add(slider);
 
         serverLabel = new JLabel("Run Server?");
         panel.add(serverLabel);
@@ -123,7 +138,9 @@ public class ServerGUI extends JFrame {
                 || playerNumber > MAX_PLAYERS
                 || playerNumber < 0
                 || robotNumber < 0
-                || robotNumber > (MAX_PLAYERS-playerNumber)) {
+                || robotNumber > (MAX_PLAYERS-playerNumber)
+                || cardNum < (playerNumber + robotNumber)
+                || !(serverButton.getText().equals("Server Run!"))) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -151,6 +168,18 @@ public class ServerGUI extends JFrame {
                 e1.printStackTrace();
             }
             System.exit(0);*/
+        }
+    }
+
+    public class SetCardEvent implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            cardNum = slider.getValue();
+            if(cardNum == 0) {
+                cardNumber.setText("How many Card?");
+            } else {
+                cardNumber.setText("Number of cards: " + String.valueOf(cardNum));
+            }
         }
     }
 
@@ -197,6 +226,8 @@ public class ServerGUI extends JFrame {
                     serverButton.setText("Negative robot number! Try again!");
                 } else if(robotNumber > (MAX_PLAYERS-playerNumber)) {
                     serverButton.setText("Too much robot! Try again!");
+                } else if(cardNum < (playerNumber + robotNumber)) {
+                    serverButton.setText("Not enough card! Try again!");
                 } else {
                     serverButton.setText("Server Run!");
                     serverButton.setEnabled(false);
