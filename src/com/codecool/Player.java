@@ -11,6 +11,7 @@ public class Player implements PlayCapable {
 	private String name;
 	private ObjectOutputStream outputStream;
 	private ObjectInputStream inputStream;
+	private Server server;
 
 	public Player(String name) {
 		this.name = name;
@@ -24,6 +25,12 @@ public class Player implements PlayCapable {
 	
 	
 
+	public Server getServer() {
+		return server;
+	}
+	public void setServer(Server server) {
+		this.server = server;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -48,8 +55,22 @@ public class Player implements PlayCapable {
 	public Card draw() {
 		return hand.remove();
 	}
-
+	public Integer choose(){
+		
+		server.send(outputStream, peek().getName());
+		
+		Integer chosenNumber = 0;
+		while(chosenNumber.equals(0)){
+			
+			chosenNumber = (Integer) server.receive(inputStream);
+			//TODO veszélyforrás !!!4
+		}
+		return chosenNumber;
+	}
+	
+	/*
 	@Override
+	
 	public Integer choose() {
 		int result = 0;
 		checkMyCard();
@@ -87,7 +108,7 @@ public class Player implements PlayCapable {
 		}
 		printer.print("Wrong number.");
 		return 0;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

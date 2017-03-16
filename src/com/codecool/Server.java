@@ -17,7 +17,7 @@ public class Server {
 	protected ServerSocket serverSocket;
 	protected final int robotsNumber;
 
-	public Server(int players,int robotsNumber, int portNumber) {
+	public Server(int players, int robotsNumber, int portNumber) {
 		this.playersNumber = players;
 		this.portNumber = portNumber;
 		this.robotsNumber = robotsNumber;
@@ -33,9 +33,6 @@ public class Server {
 		}
 	}
 
-	
-	
-	
 	public int getPlayersNumber() {
 		return playersNumber;
 	}
@@ -56,6 +53,7 @@ public class Server {
 				player.setInputStream(new ObjectInputStream(inputStream));
 				OutputStream outputStream = socket.getOutputStream();
 				player.setOutputStream(new ObjectOutputStream(outputStream));
+				player.setServer(this);
 				players.add(player);
 
 			} catch (IOException e) {
@@ -101,7 +99,8 @@ public class Server {
 	}
 
 	private boolean isANewName(ArrayList<Player> players, String name) throws IOException {
-		if(name.length() < 4 || name == null) return false;
+		if (name.length() < 4 || name == null)
+			return false;
 		for (Player player : players) {
 			if (name.equals(player.getName())) {
 				player.getOutputStream().writeObject("Name is already taken");
@@ -122,4 +121,26 @@ public class Server {
 		}
 	}
 
+	public void send(ObjectOutputStream outStream, Object object) {
+
+		try {
+			outStream.writeObject(object);
+		} catch (IOException e) {
+			printer.printError("The port is busy");
+			printer.printError(e.getStackTrace());
+		}
+
+	}
+
+	public Object receive(ObjectInputStream inputStream) {
+		Object object = null;
+		try {
+			object = inputStream.readObject();
+		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {
+			printer.printError("The port is busy");
+			printer.printError(e.getStackTrace());
+		}
+		return object;
+	}
 }

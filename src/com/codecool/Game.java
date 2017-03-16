@@ -1,14 +1,18 @@
 package com.codecool;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class Game {
+	private Integer roundNumber = 0;
+	final static String border = "-----------------------------------------------------------------";
 	private Server server;
 	private List<PlayCapable> players = new ArrayList<>();
 	private List<PlayCapable> changingPlayerList = new ArrayList<>();
 	private Printer printer;
 	private final String[] attrs = { "Max Speed", "Max Height", "Max Takeoff weigth", "Maximum range" };
 	private final Map<Integer, Comparator> choiceMap = new TreeMap<Integer, Comparator>() {
+	
 		{
 			put(1, new speedComparator());
 			put(2, new maxHeightComparator());
@@ -17,6 +21,7 @@ public class Game {
 		}
 
 	};
+	
 
 	public String parseKey() {
 		Scanner scanner = new Scanner(System.in);
@@ -52,54 +57,14 @@ public class Game {
 
 		ArrayList<Player> namelessPlayers = server.gatherPlayers();
 		ArrayList<Player> players = server.setNames(namelessPlayers);
-		this.players = new ArrayList<PlayCapable>();
 		this.players.addAll(players);
 		for (int i = 0; i < server.getRobotsNumber(); i++) {
 			Robot robot = new Robot();
 			this.players.add(robot);
 		}
 
-//		 this.players = players;
-//		
-//		 printer.print("Let's set up the players!");
-//		 printer.print(String.format(
-//		 "Please enter the name of the %s. player. " + "Or enter Robot, if you
-//		 would like to add a robot :).",
-//		 players.size()));
-//		 printer.print("Enter 'done' if you wouldn't like to add nem player");
-//		 boolean gathering = true;
-//		 while (gathering) {
-//		 String input = parseKey();
-//		 if (input.equals("exit")) {
-//		 gathering = false;
-//		 } else if (input.equals("robot")) {
-//		 PlayCapable robot = new Robot();
-//		 players.add(robot);
-//		 printer.print(String.format("%s added", robot.getName()));
-//		 } else {
-//		 PlayCapable player = new Player(input);
-//		 if (players.contains(player)) {
-//		 try {
-//		 throw new NameTakenException();
-//		 } catch (NameTakenException error) {
-//		 printer.print(error.errorMessage());
-//		 }
-//		 } else {
-//		 printer.print(String.format("%s added", player.getName()));
-//		 }
-//		 players.add(player);
-//		 }
-//		 }
 	}
 
-	public void fillChoiceMap() { // TODO rmovable
-
-		choiceMap.put(1, new speedComparator());
-		choiceMap.put(2, new maxHeightComparator());
-		choiceMap.put(3, new maxTakeoffWeightComparator());
-		choiceMap.put(4, new rangeComparator());
-
-	}
 
 	public void awardWinner(TreeMap<Card, PlayCapable> map) {
 		int count = 0;
@@ -112,7 +77,8 @@ public class Game {
 	}
 
 	public PlayCapable round() {
-		printer.print("-----------------------------------------------------------------");
+		printer.print(border);
+		broadCast(roundNumber);
 		Map<Card, PlayCapable> cards = new HashMap<>();
 		PlayCapable roundAttacker = roundAttacker();
 		printer.print(roundAttacker.getName() + " is attacking!\n");
@@ -141,11 +107,43 @@ public class Game {
 			printer.print(String.format("%s has %d card(s) left", player.getName(), player.cardsRemaining()));
 		}
 
-		printer.print("-----------------------------------------------------------------");
+		printer.print(border);
+		broadCast(createResultList(sorted));
+		roundNumber++;
 		return winner;
 	}
+	private ArrayList<ArrayList<String>> createResultList(TreeMap<Card, PlayCapable> list){
+		
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+		String first = "TRUE";
+		
+		for (Entry<Card, PlayCapable> entry : list.entrySet()) {
+			ArrayList<String> subList = new ArrayList<String>();
+			subList.add(entry.getKey().getName());
+			subList.add(entry.getValue().getName());
+			subList.add(first);
+			
+			result.add(subList);
+			first = "FALSE";
+		}
+		
+		return result;
+	}
+	
+	
+	
+	private void broadCast(Object object){
+		
+		for (PlayCapable playCapable : players) {
+			
+			if(playCapable instanceof Player){
+				Player player = (Player) playCapable;
+				server.send(player.getOutputStream(), object);
+			}
+		}
+	}
 
-	public PlayCapable roundAttacker() {
+	private PlayCapable roundAttacker() {
 		while (true) {
 			try {
 				for (PlayCapable playCapable : changingPlayerList) {
