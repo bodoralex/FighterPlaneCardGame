@@ -1,39 +1,45 @@
-package com.codecool;
+package com.codecool.client;
 
+import com.codecool.Card;
+import com.codecool.Deck;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 
 /**
- * Created by Lovi on 2017. 03. 02. @ 0:43.
+ * Created by lovi on 2017.03.16..
  */
-public class DisplayImage extends JFrame{
+public class DisplayLastWinner extends JFrame {
     private JLabel lbl;
     private JLabel lblSpeed;
     private JLabel lblHeight;
     private JLabel lblWeight;
     private JLabel lblRange;
     private JLabel lbl2;
+    private JLabel lbl3;
     private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
     private JPanel topLabel;
     private JPanel picturePanel;
     private JPanel labelPanel;
     private JPanel buttonPanel;
     private Container contentPane;
-    private Integer numToReturn;
     private Card cardGot;
+    private Deck toSearch;
 
-    public DisplayImage(Card c) throws IOException {
-        cardGot = c;
+    public DisplayLastWinner(String c,String winnerName) throws IOException {
+        toSearch = new Deck();
+        toSearch.fillDeck(Card.values());
+        for(Card d : Card.values()){
+            if(d.getID() == c){
+                cardGot = d;
+            }
+        }
 
         BufferedImage originalImage = null;
         try {
@@ -42,7 +48,7 @@ public class DisplayImage extends JFrame{
             e.printStackTrace();
         }
         int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
-        BufferedImage resizedImage = resizeImage(originalImage, type);
+        BufferedImage resizedImage = DisplayImage.resizeImage(originalImage, type);
         setAlwaysOnTop(true);
         setLocationRelativeTo(null);
         ImageIcon icon = new ImageIcon(resizedImage);
@@ -50,7 +56,9 @@ public class DisplayImage extends JFrame{
         lbl.setIcon(icon);
         lbl.setHorizontalAlignment(SwingConstants.LEFT);
         lbl2 = new JLabel();
-        lbl2.setText("Players card: " + cardGot.getName());
+        lbl3 = new JLabel();
+        lbl3.setText("Last turns winner: "+winnerName);
+        lbl2.setText("Last turns winner card: " + cardGot.getName());
         lblSpeed = new JLabel();
         lblSpeed.setText("Speed: " + cardGot.getSpeed() + "km/h | ");
         lblHeight = new JLabel();
@@ -66,6 +74,7 @@ public class DisplayImage extends JFrame{
         topLabel = new JPanel();
         topLabel.setLayout(new BoxLayout(topLabel,BoxLayout.LINE_AXIS));
         topLabel.add(lbl2);
+        topLabel.add(lbl3);
         labelPanel = new JPanel();
         labelPanel.setLayout(new BoxLayout(labelPanel,BoxLayout.LINE_AXIS));
         labelPanel.add(lblSpeed);
@@ -74,17 +83,8 @@ public class DisplayImage extends JFrame{
         labelPanel.add(lblRange);
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.LINE_AXIS));
-        button1 = new JButton("Speed");
+        button1 = new JButton("Close");
         buttonPanel.add(button1);
-        buttonPanel.add(Box.createRigidArea(new Dimension(45,0)));
-        button2 = new JButton("Height");
-        buttonPanel.add(button2);
-        buttonPanel.add(Box.createRigidArea(new Dimension(75,0)));
-        button3 = new JButton("Weight");
-        buttonPanel.add(button3);
-        buttonPanel.add(Box.createRigidArea(new Dimension(60,0)));
-        button4 = new JButton("Range");
-        buttonPanel.add(button4);
         contentPane = new Container();
         contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
         contentPane.add(topLabel);
@@ -96,63 +96,21 @@ public class DisplayImage extends JFrame{
         setMinimumSize(new Dimension(600,320));
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        numToReturn = 0;
+        try {
+            Thread.sleep(5000);
+            setVisible(false);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                numToReturn = 1;
                 setVisible(false);
-
             }
         });
 
-        button2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                numToReturn = 2;
-                setVisible(false);
-
-            }
-        });
-        button3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                numToReturn = 3;
-                setVisible(false);
-
-            }
-        });
-        button4.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                numToReturn = 4;
-                setVisible(false);
-
-            }
-        });
 
     }
 
-    public static BufferedImage resizeImage(BufferedImage originalImage, int type) {
-        BufferedImage resizedImage = new BufferedImage(512, 256, type);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, 512, 256, null);
-        g.dispose();
 
-        return resizedImage;
-    }
 
-    public Integer getNumToReturn() {
-        int temp = numToReturn;
-        numToReturn = 0;
-        return temp;
-    }
-
-    public Integer getChoosenNumber() {
-        return this.numToReturn;
-    }
-
-    public class SpeedActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            numToReturn = 1;
-            System.out.println(numToReturn);
-        }
-    }
 }

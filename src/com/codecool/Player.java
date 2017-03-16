@@ -1,5 +1,7 @@
 package com.codecool;
 
+import com.codecool.client.DisplayImage;
+
 import java.io.IOException;
 
 public class Player implements PlayCapable {
@@ -33,7 +35,7 @@ public class Player implements PlayCapable {
 		checkMyCard();
 
 		try {
-			DisplayImage dsplyImage = new DisplayImage(hand.peek());
+			DisplayImage dsplyImage = new DisplayImage(hand.peek().getID());
 			while (result == 0) {
 				result = dsplyImage.getNumToReturn();
 				// System.out.println(result);
